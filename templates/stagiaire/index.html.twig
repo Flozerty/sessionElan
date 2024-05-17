@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des stagiaires{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<h1>Liste des stagiaires :</h1>
+
+{% for stagiaire in stagiaires %}
+{{stagiaire.nom}}<br>
+{% endfor %}
+
+{% endblock %}
