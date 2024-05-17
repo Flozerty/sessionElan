@@ -26,11 +26,27 @@
 
         <nav>
             <ul>
-                <li><a href="{{path('app_formation')}}">Les formations</a></li>
-                <li><a href="{{path('app_session')}}">Les sessions</a></li>
-                <li><a href="{{path('app_formateur')}}">Les formateurs</a></li>
-                <li><a href="{{path('app_stagiaire')}}">Les stagiaires</a></li>
-                <li><a href="{{path('app_module')}}">Les modules</a></li>
+                <li>
+                    <a {% if activePage is defined and activePage=="formations" %} class="active" {% endif %}
+                        href="{{path('app_formation')}}">Les
+                        formations</a>
+                </li>
+                <li>
+                    <a {% if activePage is defined and activePage=="sessions" %} class="active" {% endif %}
+                        href="{{path('app_session')}}">Les sessions</a>
+                </li>
+                <li>
+                    <a {% if activePage is defined and activePage=="formateurs" %} class="active" {% endif %}
+                        href="{{path('app_formateur')}}">Les formateurs</a>
+                </li>
+                <li>
+                    <a {% if activePage is defined and activePage=="stagiaires" %} class="active" {% endif %}
+                        href="{{path('app_stagiaire')}}">Les stagiaires</a>
+                </li>
+                <li>
+                    <a {% if activePage is defined and activePage=="modules" %} class="active" {% endif %}
+                        href="{{path('app_module')}}">Les modules</a>
+                </li>
             </ul>
         </nav>
 
@@ -51,14 +67,18 @@
         </div>
     </header>
 
-    <main>
-        {# template injection #}
-        {% block body %}{% endblock %}
-    </main>
+    <div id="main-wrapper">
+        <main>
+            {# template injection #}
+            {% block body %}{% endblock %}
+        </main>
+    </div>
 
     <footer>
 
     </footer>
+
+    <div id="bcgd-container"></div>
 </body>
 
 </html>

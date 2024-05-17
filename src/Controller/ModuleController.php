@@ -12,7 +12,8 @@ class ModuleController extends AbstractController
     public function index(): Response
     {
         return $this->render('module/index.html.twig', [
-            'controller_name' => 'ModuleController',
+            'activePage' => 'modules'
+
         ]);
     }
 }

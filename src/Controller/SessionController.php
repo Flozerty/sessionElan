@@ -12,7 +12,8 @@ class SessionController extends AbstractController
     public function index(): Response
     {
         return $this->render('session/index.html.twig', [
-            'controller_name' => 'SessionController',
+            'activePage' => 'sessions'
+
         ]);
     }
 }

@@ -12,7 +12,7 @@ class FormationController extends AbstractController
     public function index(): Response
     {
         return $this->render('formation/index.html.twig', [
-            'controller_name' => 'FormationController',
+            'activePage' => 'formations'
         ]);
     }
 }
