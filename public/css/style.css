@@ -108,7 +108,7 @@ main {
   position: fixed;
   bottom: -10%;
   right: -10%;
-  background-image: url('http://127.0.0.1:8000/img/bcgd_book.png');
+  background-image: url('../img/bcgd_book.png');
   background-size: contain;
   background-position: center right;
   background-repeat: no-repeat;
