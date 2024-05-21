@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/7252ea4d54.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     {% block stylesheets %}{% endblock %}
 
@@ -22,7 +24,7 @@
 <body>
     <header>
 
-        <h2 id="logo">SESSION</h2>
+        <h2 id="logo"><a href="{{path('app_home')}}">SESSION</a></h2>
 
         <nav>
             <ul>
