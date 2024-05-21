@@ -1,3 +1,9 @@
+:root {
+  --darkbrown: #855745;
+  --lightbrown: #E0D5D1;
+  --transitionTime: 0.3s
+}
+
 #session-content {
   width: 100%;
   display: flex;
@@ -18,4 +24,61 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  table {
+    margin: 20px 0;
+  }
+}
+
+#modulesTable {
+  border: 1px solid var(--darkbrown);
+  margin-bottom: 10px;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  th,
+  td {
+    padding: 10px 5px;
+  }
+
+  tr:first-of-type {
+    td {
+      padding: 0;
+      background-color: white;
+    }
+  }
+
+  tr th:first-of-type {
+    max-width: 40%;
+  }
+
+  tr th:last-of-type {
+    width: 50%;
+  }
+
+  tbody {
+    i {
+      color: red;
+    }
+  }
+}
+
+#otherModulesContainer {
+  display: flex;
+  flex-wrap: wrap;
+
+  span {
+    display: block;
+    background-color: var(--darkbrown);
+    color: white;
+    margin: 10px 5px 0 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+}
+
+#session-modules {
+  margin-bottom: 50px;
 }
