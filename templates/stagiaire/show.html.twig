@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
+<link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -12,7 +13,7 @@
 
 <a href="#" class="modifyButton">Modifier les infos</a>
 
-<div id="stagiaire-infos">
+<section id="stagiaire-infos">
   <p><b>Nom : </b><span>{{stagiaire.nom}}</span></p>
   <p><b>Prénom : </b><span>{{stagiaire.prenom}}</span></p>
   <p>
@@ -23,10 +24,53 @@
   <p><b>Ville : </b><span>{{stagiaire.ville}}</span></p>
   <p><b>Téléphone : </b><span>{{stagiaire.tel}}</span></p>
   <p><b>Email : </b><span>{{stagiaire.email}}</span></p>
-</div>
+</section>
 
-<div id="stagiaire-sessions">
-  Sessions
-</div>
+<hr>
+
+<section id="stagiaire-sessions">
+  <h3>Sessions enregistrées :</h3>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Intitulé</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for session in stagiaire.sessions %}
+
+      <tr>
+        <th>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.intitule}}
+          </a>
+        </th>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateDebut | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateFin | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <i class="fa-solid fa-circle-xmark del-btn"></i>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+</section>
 
 {% endblock %}

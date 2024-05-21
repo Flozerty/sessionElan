@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{asset('css/formateur.css')}}">
+<link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -12,14 +13,50 @@
 
 <a href="#" class="modifyButton">Modifier les infos</a>
 
-<div id="formateur-infos">
+<section id="formateur-infos">
   <p><b>Nom : </b><span>{{formateur.nom}}</span></p>
   <p><b>Prénom : </b><span>{{formateur.prenom}}</span></p>
+</section>
 
-</div>
+<hr>
 
-<div id="formateur-sessions">
-  Sessions
-</div>
+<section id="formateur-sessions">
+  <h3>Sessions encadrées :</h3>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Intitulé</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for session in formateur.sessions %}
+
+      <tr>
+        <th>
+          {{session.intitule}}
+        </th>
+        <td>
+          {{session.dateDebut | date("d/m/Y")}}
+        </td>
+        <td>
+          {{session.dateFin | date("d/m/Y")}}
+        </td>
+        <td>
+          <i class="fa-solid fa-circle-xmark del-btn"></i>
+        </td>
+      </tr>
+
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+</section>
 
 {% endblock %}
