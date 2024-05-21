@@ -23,6 +23,12 @@
 <section id="formateur-sessions">
   <h3>Sessions encadrées :</h3>
 
+  {% if formateur.sessions is empty %}
+
+  <p>Aucune session</p>
+
+  {% else %}
+
   <table>
 
     <thead>
@@ -57,6 +63,8 @@
 
     </tbody>
   </table>
+  {% endif %}
+
 </section>
 
 {% endblock %}

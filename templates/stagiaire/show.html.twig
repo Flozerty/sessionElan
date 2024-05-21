@@ -31,6 +31,11 @@
 <section id="stagiaire-sessions">
   <h3>Sessions enregistrées :</h3>
 
+  {% if stagiaire.sessions is empty %}
+
+  <p>Aucune session</p>
+
+  {% else %}
   <table>
 
     <thead>
@@ -70,6 +75,7 @@
 
     </tbody>
   </table>
+  {% endif %}
 
 </section>
 
