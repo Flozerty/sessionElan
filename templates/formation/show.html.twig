@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{asset('css/formation.css')}}">
+<link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -12,13 +13,177 @@
 
 <a href="#" class="modifyButton">Modifier les infos</a>
 
-<div id="formation-infos">
+<section id="formation-infos">
   <p><b>Nom : </b><span>{{formation.nomFormation}}</span></p>
+</section>
 
-</div>
+<hr>
 
-<div id="formation-sessions">
-  Sessions
-</div>
+{# #################### SESSIONS EN COURS #################### #}
 
+
+<section id="formation-sessionsNow">
+  <h3>Liste des sessions en cours :</h3>
+
+  {% if sessionsNow is not empty %}
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Intitulé</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for session in sessionsNow %}
+
+      <tr>
+        <th>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.intitule}}
+          </a>
+        </th>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateDebut | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateFin | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <i class="fa-solid fa-circle-xmark del-btn"></i>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p>Pas de session en cours</p>
+
+  {% endif %}
+
+</section>
+
+<hr>
+
+{# #################### SESSIONS FUTURES #################### #}
+
+
+<section id="formation-sessionsFutur">
+  <h3>Liste des sessions à venir :</h3>
+
+  {% if sessionsFuture is not empty %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>Intitulé</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for session in sessionsFuture %}
+
+      <tr>
+        <th>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.intitule}}
+          </a>
+        </th>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateDebut | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateFin | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <i class="fa-solid fa-circle-xmark del-btn"></i>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p>Pas de sessions à venir</p>
+
+  {% endif %}
+
+</section>
+
+<hr>
+{# #################### SESSIONS TERMINEES #################### #}
+
+<section id="formation-sessionsPast">
+  <h3>Liste des sessions terminées :</h3>
+
+  {% if sessionsPast is not empty %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>Intitulé</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for session in sessionsPast %}
+
+      <tr>
+        <th>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.intitule}}
+          </a>
+        </th>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateDebut | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.dateFin | date("d/m/Y")}}
+          </a>
+        </td>
+        <td>
+          <i class="fa-solid fa-circle-xmark del-btn"></i>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p>aucune session passée</p>
+
+  {% endif %}
+
+</section>
+<hr>
 {% endblock %}
