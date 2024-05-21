@@ -26,56 +26,59 @@
   <section id="session-modules">
     <h3>Liste des modules :</h3>
 
-    <table id="modulesTable">
-      <thead>
-        <tr>
-          <th>Modules intégrés</th>
-          <th>Durée</th>
-          <th><i class="fa-solid fa-circle-xmark"></i></th>
-          <th>Ajouter module</th>
-        </tr>
-      </thead>
+    <div id="session-wrapper">
 
-      <tbody>
-        <tr>
-          <td colspan="3"></td>
+      {# modules dans la session #}
+      <table id="modulesTable">
+        <thead>
+          <tr>
+            <th>Modules intégrés</th>
+            <th>Durée</th>
+            <th><i class="fa-solid fa-circle-xmark"></i></th>
+          </tr>
+        </thead>
 
-          {# On insère tous les modules disponibles qui ne sont pas dans la session #}
-          <td id="otherModulesContainer" rowspan="{{session.programmes|length +1}}">
+        <tbody>
 
-            {% for module in autresModules %}
-            <span>{{ module.nomModule }}</span>
-            {% endfor %}
+          {% if session.programmes is empty %}
+          <tr>
+            <td colspan="3">
+              Aucun module
+            </td>
+          </tr>
+          {% else %}
 
-          </td>
-        </tr>
+          {% for prog in session.programmes %}
+          <tr>
+            <th>
+              {{prog.module.nomModule}}
+            </th>
+            <td>
+              {{prog.duree}} j.
+            </td>
+            <td>
+              <i class="fa-solid fa-circle-xmark"></i>
+            </td>
+          </tr>
 
-        {% if session.programmes is empty %}
-        <tr>
-          <td colspan="3">
-            Aucun module
-          </td>
-        </tr>
-        {% else %}
+          {% endfor %}
+          {% endif %}
 
-        {% for prog in session.programmes %}
-        <tr>
-          <th>
-            {{prog.module.nomModule}}
-          </th>
-          <td>
-            {{prog.duree}} j.
-          </td>
-          <td>
-            <i class="fa-solid fa-circle-xmark"></i>
-          </td>
-        </tr>
+        </tbody>
+      </table>
 
-        {% endfor %}
-        {% endif %}
+      {# modules disponibles qui ne sont pas dans la session #}
 
-      </tbody>
-    </table>
+      <div id="otherModulesContainer">
+        <p>Ajouter un module</p>
+
+        <div id="modules-container">
+          {% for module in autresModules %}
+          <span>{{ module.nomModule }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
     <b>Durée totale :</b> {{dureeTotale}} jours
   </section>
