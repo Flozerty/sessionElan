@@ -1,0 +1,21 @@
+#session-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.addButton {
+  align-self: center;
+}
+
+#session-places {
+  display: flex;
+  justify-content: space-between;
+}
+
+#session-stagiaires {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
