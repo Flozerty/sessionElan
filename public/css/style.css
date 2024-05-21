@@ -32,6 +32,19 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 10px 0;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+h3 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -44,6 +57,7 @@ header {
   border-bottom: 1px solid black;
   padding: 0 25px;
   background-color: white;
+  z-index: 10;
 }
 
 nav ul {
@@ -98,6 +112,8 @@ nav ul {
 
 #main-wrapper {
   padding: 100px 15%;
+  position: relative;
+  z-index: 1;
 }
 
 #bcgd-container {
@@ -128,10 +144,16 @@ main {
   flex-direction: column;
   align-items: center;
   margin-bottom: 50px;
+  width: 100%;
 }
 
-h1 {
-  margin-bottom: 50px;
+hr {
+  width: 100%;
+}
+
+section {
+  margin: 50px 0 0 0;
+  width: 100%;
 }
 
 .addButton {
@@ -141,6 +163,7 @@ h1 {
   padding: 10px 20px;
   border-radius: 15px;
   font-weight: bold;
+  width: fit-content;
 
   i {
     margin-right: 10px;
@@ -157,9 +180,4 @@ h1 {
 
 .editButton {
   color: var(--darkbrown);
-}
-
-.deleteButton {
-  color: white;
-  background-color: red;
 }
