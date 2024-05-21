@@ -1,0 +1,32 @@
+.delete-link {
+  color: red;
+}
+
+#components-container {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+.component {
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 20px 5px 5px 0;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  z-index: 2;
+}
+
+.name {
+  grid-column: 1;
+}
+
+.link {
+  grid-column: 2;
+  font-weight: bold;
+}
+
+.delete-link {
+  grid-column: 3;
+}

@@ -2,6 +2,37 @@
 
 {% block title %}Liste des formations{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/list.css')}}">
+{% endblock %}
+
 {% block body %}
+
+<h1>Liste des formations</h1>
+
+<a href="#" class="addButton">
+  <i class="fa-solid fa-circle-plus"></i> Créer une formation
+</a>
+
+<div id="components-container">
+  {% for formation in formations %}
+
+  <div class="component">
+    <span class="name">
+      {{formation.nomFormation}}
+    </span>
+
+    <span class="link">
+      <a href="{{ path('show_formation', {'id': formation.id}) }}"><i class="fa-solid fa-link"></i> voir les
+        sessions</a>
+    </span>
+
+    <span class="delete-link">
+      <a href="#">supprimer</a>
+    </span>
+  </div>
+
+  {% endfor %}
+</div>
 
 {% endblock %}

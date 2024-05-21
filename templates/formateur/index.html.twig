@@ -2,6 +2,34 @@
 
 {% block title %}Liste des formateurs{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/list.css')}}">
+{% endblock %}
+
 {% block body %}
+
+<h1>Liste des formateurs</h1>
+
+<a href="#" class="addButton">
+  <i class="fa-solid fa-circle-plus"></i> Créer un formateur
+</a>
+
+<div id="components-container">
+  {% for formateur in formateurs %}
+
+  <div class="component">
+    <span class="name">
+      {{formateur.nom}} {{formateur.prenom}}
+    </span>
+    <span class="link">
+      <a href="{{ path('show_formateur', {'id': formateur.id}) }}"><i class="fa-solid fa-link"></i> voir les infos</a>
+    </span>
+    <span class="delete-link">
+      <a href="#">supprimer</a>
+    </span>
+  </div>
+
+  {% endfor %}
+</div>
 
 {% endblock %}

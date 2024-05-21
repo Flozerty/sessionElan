@@ -1,7 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SessionController!{% endblock %}
+{% block title %}Liste des sessions{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/table.css')}}">
+<link rel="stylesheet" href="{{asset('css/list.css')}}">
+{% endblock %}
 
 {% block body %}
+
+<h1>Liste des sessions</h1>
+
+<a href="#" class="addButton">
+  <i class="fa-solid fa-circle-plus"></i> Créer une session
+</a>
+
+<div id="components-container">
+  {% for session in sessions %}
+
+  <div class="component">
+    <span class="name">
+      {{session.intitule}}
+    </span>
+    <span class="link">
+      <a href="{{ path('show_session', {'id': session.id}) }}"><i class="fa-solid fa-link"></i> voir les infos</a>
+    </span>
+    <span class="delete-link">
+      <a href="#">supprimer</a>
+    </span>
+  </div>
+
+  {% endfor %}
+</div>
 
 {% endblock %}
