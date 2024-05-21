@@ -1,18 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Infos stagiaire{% endblock %}
+{% block title %}{{stagiaire.nom}} {{stagiaire.prenom}}{% endblock %}
 
 {% block stylesheets %}
-
+<link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
 {% endblock %}
 
 {% block body %}
 
-<h1>Infos stagiaire :</h1>
+<h1>{{stagiaire.nom}} {{stagiaire.prenom}}</h1>
 
+<a href="#" class="modifyButton">Modifier les infos</a>
 
-{{stagiaire.nom}}
-{{stagiaire.prenom}}
+<div id="stagiaire-infos">
+  <p><b>Nom : </b><span>{{stagiaire.nom}}</span></p>
+  <p><b>Prénom : </b><span>{{stagiaire.prenom}}</span></p>
+  <p>
+    <b>Date de naissance : </b>
+    <span>{{stagiaire.dateNaissance is empty ? "non renseigné" : stagiaire.dateNaissance | date("d/m/Y")}}</span>
+  </p>
+  <p><b>Sexe : </b><span>{{stagiaire.sexe is empty ? "non renseigné" : stagiaire.sexe}}</span></p>
+  <p><b>Ville : </b><span>{{stagiaire.ville}}</span></p>
+  <p><b>Téléphone : </b><span>{{stagiaire.tel}}</span></p>
+  <p><b>Email : </b><span>{{stagiaire.email}}</span></p>
+</div>
 
+<div id="stagiaire-sessions">
+  Sessions
+</div>
 
 {% endblock %}

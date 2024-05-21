@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session de {{session.intitule}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/session.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<h1>Session de {{session.intitule}}</h1>
+
+<a href="#" class="modifyButton">Modifier les infos</a>
+
+<div id="session-infos">
+  <p><b>Formation : </b><span>{{session.formation.nomFormation}}</span></p>
+  <p><b>Intitulé : </b><span>{{session.intitule}}</span></p>
+  <p><b>Formateur référent : </b><span>{{session.formateur.nom}}</span></p>
+  <p><b>Date de début : </b><span>{{session.dateDebut | date("d/m/Y")}}</span></p>
+  <p><b>Date de fin : </b><span>{{session.dateFin | date("d/m/Y")}}</span></p>
+</div>
+
+<div id="session-modules">
+  Liste des modules :<br>
+  {% for prog in session.programmes %}
+
+  <span class="module">{{prog.module.nomModule}}</span><br>
+
+  {% endfor %}
+
+  Durée totale :
+</div>
+
+<div id="session-places">
+  <p><b>Places totales : </b><span>{{session.nbPlaces}}</span></p>
+  <p><b>Participants : </b><span>{{session.stagiaires | length}}</span></p>
+  <p><b>Places libres : </b><span>{{session.nbPlaces - session.stagiaires | length}}</span></p>
+</div>
+
+<a href="#" class="addButton">
+  <i class="fa-solid fa-circle-plus"></i> Créer une formation
+</a>
+
+<div id="session-places">
+  Liste des stagiaires :
+</div>
+{% endblock %}

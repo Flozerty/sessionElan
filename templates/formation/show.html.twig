@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{formation.nomFormation}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/formation.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<h1>{{formation.nomFormation}}</h1>
+
+<a href="#" class="modifyButton">Modifier les infos</a>
+
+<div id="formation-infos">
+  <p><b>Nom : </b><span>{{formation.nomFormation}}</span></p>
+
+</div>
+
+<div id="formation-sessions">
+  Sessions
+</div>
+
+{% endblock %}
