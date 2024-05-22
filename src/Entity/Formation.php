@@ -10,69 +10,69 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column]
+  private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $nom_formation = null;
+  #[ORM\Column(length: 50)]
+  private ?string $nom_formation = null;
 
-    /**
-     * @var Collection<int, Session>
-     */
-    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'formation', orphanRemoval: true)]
-    private Collection $sessions;
+  /**
+   * @var Collection<int, Session>
+   */
+  #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'formation', orphanRemoval: true)]
+  private Collection $sessions;
 
-    public function __construct()
-    {
-        $this->sessions = new ArrayCollection();
+  public function __construct()
+  {
+    $this->sessions = new ArrayCollection();
+  }
+
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
+
+  public function getNomFormation(): ?string
+  {
+    return $this->nom_formation;
+  }
+
+  public function setNomFormation(string $nom_formation): static
+  {
+    $this->nom_formation = $nom_formation;
+
+    return $this;
+  }
+
+  /**
+   * @return Collection<int, Session>
+   */
+  public function getSessions(): Collection
+  {
+    return $this->sessions;
+  }
+
+  public function addSession(Session $session): static
+  {
+    if (!$this->sessions->contains($session)) {
+      $this->sessions->add($session);
+      $session->setFormation($this);
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
+    return $this;
+  }
+
+  public function removeSession(Session $session): static
+  {
+    if ($this->sessions->removeElement($session)) {
+      // set the owning side to null (unless already changed)
+      if ($session->getFormation() === $this) {
+        $session->setFormation(null);
+      }
     }
 
-    public function getNomFormation(): ?string
-    {
-        return $this->nom_formation;
-    }
-
-    public function setNomFormation(string $nom_formation): static
-    {
-        $this->nom_formation = $nom_formation;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Session>
-     */
-    public function getSessions(): Collection
-    {
-        return $this->sessions;
-    }
-
-    public function addSession(Session $session): static
-    {
-        if (!$this->sessions->contains($session)) {
-            $this->sessions->add($session);
-            $session->setFormation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSession(Session $session): static
-    {
-        if ($this->sessions->removeElement($session)) {
-            // set the owning side to null (unless already changed)
-            if ($session->getFormation() === $this) {
-                $session->setFormation(null);
-            }
-        }
-
-        return $this;
-    }
+    return $this;
+  }
 }

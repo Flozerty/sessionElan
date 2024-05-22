@@ -2,85 +2,85 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/7252ea4d54.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/7252ea4d54.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    {% block stylesheets %}{% endblock %}
+  <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  {% block stylesheets %}{% endblock %}
 
-    {% block javascripts %}
-    {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
+  {% block javascripts %}
+  {% block importmap %}{{ importmap('app') }}{% endblock %}
+  {% endblock %}
 </head>
 
 <body>
-    <header>
+  <header>
 
-        <h2 id="logo"><a href="{{path('app_home')}}">SESSION</a></h2>
+    <h2 id="logo"><a href="{{path('app_home')}}">SESSION</a></h2>
 
-        <nav>
-            <ul>
-                <li>
-                    <a {% if activePage is defined and activePage=="formations" %} class="active" {% endif %}
-                        href="{{path('app_formation')}}">Formations</a>
-                </li>
-                <li>
-                    <a {% if activePage is defined and activePage=="sessions" %} class="active" {% endif %}
-                        href="{{path('app_session')}}">Sessions</a>
-                </li>
-                <li>
-                    <a {% if activePage is defined and activePage=="formateurs" %} class="active" {% endif %}
-                        href="{{path('app_formateur')}}">Formateurs</a>
-                </li>
-                <li>
-                    <a {% if activePage is defined and activePage=="stagiaires" %} class="active" {% endif %}
-                        href="{{path('app_stagiaire')}}">Stagiaires</a>
-                </li>
-                <li>
-                    <a {% if activePage is defined and activePage=="modules" %} class="active" {% endif %}
-                        href="{{path('app_module')}}">Modules</a>
-                </li>
-            </ul>
-        </nav>
+    <nav>
+      <ul>
+        <li>
+          <a {% if activePage is defined and activePage=="formations" %} class="active" {% endif %}
+            href="{{path('app_formation')}}">Formations</a>
+        </li>
+        <li>
+          <a {% if activePage is defined and activePage=="sessions" %} class="active" {% endif %}
+            href="{{path('app_session')}}">Sessions</a>
+        </li>
+        <li>
+          <a {% if activePage is defined and activePage=="formateurs" %} class="active" {% endif %}
+            href="{{path('app_formateur')}}">Formateurs</a>
+        </li>
+        <li>
+          <a {% if activePage is defined and activePage=="stagiaires" %} class="active" {% endif %}
+            href="{{path('app_stagiaire')}}">Stagiaires</a>
+        </li>
+        <li>
+          <a {% if activePage is defined and activePage=="modules" %} class="active" {% endif %}
+            href="{{path('app_module')}}">Modules</a>
+        </li>
+      </ul>
+    </nav>
 
-        <div id="connexion-status">
-            {% if app.user %}
-            {# on affiche que la partie avant le @ #}
-            <a id="userConnected" href="#">{{ app.user.email | split('@') [0] }}</a>
-            <a href="{{path('app_logout')}}">Se déconnecter</a>
-            {% else %}
-            <a href="{{path('app_login')}}">Se connecter</a>
-            <a href="{{path('app_register')}}">S'enregistrer</a>
+    <div id="connexion-status">
+      {% if app.user %}
+      {# on affiche que la partie avant le @ #}
+      <a id="userConnected" href="#">{{ app.user.email | split('@') [0] }}</a>
+      <a href="{{path('app_logout')}}">Se déconnecter</a>
+      {% else %}
+      <a href="{{path('app_login')}}">Se connecter</a>
+      <a href="{{path('app_register')}}">S'enregistrer</a>
 
-            {% endif %}
+      {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') %}
-            <a href="#">admin</a>
-            {% endif %}
-        </div>
-    </header>
-
-    <div id="main-wrapper">
-        <main>
-            {# template injection #}
-            {% block body %}{% endblock %}
-        </main>
+      {% if is_granted('ROLE_ADMIN') %}
+      <a href="#">admin</a>
+      {% endif %}
     </div>
+  </header>
 
-    <footer>
+  <div id="main-wrapper">
+    <main>
+      {# template injection #}
+      {% block body %}{% endblock %}
+    </main>
+  </div>
 
-    </footer>
+  <footer>
 
-    <div id="bcgd-container"></div>
-    {% block javascriptsBottom %}{% endblock %}
+  </footer>
+
+  <div id="bcgd-container"></div>
+  {% block javascriptsBottom %}{% endblock %}
 </body>
 
 </html>

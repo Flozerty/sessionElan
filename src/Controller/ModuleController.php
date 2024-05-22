@@ -9,15 +9,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ModuleController extends AbstractController
 {
-    #[Route('/module', name: 'app_module')]
-    public function index(ModuleRepository $moduleRepository): Response
-    {
-        $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
+  #[Route('/module', name: 'app_module')]
+  public function index(ModuleRepository $moduleRepository): Response
+  {
+    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
 
-        return $this->render('module/index.html.twig', [
-            'activePage' => 'modules',
-            'modules' => $modules
+    return $this->render('module/index.html.twig', [
+      'activePage' => 'modules',
+      'modules' => $modules
 
-        ]);
-    }
+    ]);
+  }
 }
