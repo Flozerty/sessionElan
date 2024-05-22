@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   // window.onload = function () { // marche pas :'(
 
   const addButtons = document.querySelectorAll(".addButton");
-  const cancelButton = document.getElementById("cancel");
+  const cancelButton = document.querySelector(".cancel");
   const dialog = document.querySelector("dialog");
   const body = document.querySelector("body");
 
