@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
+use App\Entity\Programme;
 use App\Entity\Session;
 use App\Repository\ModuleRepository;
+use App\Repository\ProgrammeRepository;
 use App\Repository\SessionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -56,5 +60,23 @@ class SessionController extends AbstractController
             'autresModules' => $autresModules,
 
         ]);
+    }
+
+    #[Route('/session/{idSession}/delete/programme/{idProgramme}', name: 'remove_session_programme')]
+    public function remove(int $idSession, int $idProgramme, SessionRepository $sessionRepository, ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager)
+    {
+        $session = $sessionRepository->find($idSession);
+        $programme = $programmeRepository->find($idProgramme);
+        $session->removeProgramme($programme);
+        $entityManager->flush();
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+    }
+
+    #[Route('/session/{id}/add/programme', name: 'add_session_programme')]
+    public function add(Session $session, Programme $programme, EntityManagerInterface $entityManager)
+    {
+        // $entityManager->add($programme);
+        // $entityManager->flush();
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
     }
 }
