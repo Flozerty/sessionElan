@@ -16,9 +16,17 @@
 
 <div id="session-content">
   <section id="session-infos">
-    <p><b>Formation : </b><span>{{session.formation.nomFormation}}</span></p>
     <p><b>Intitulé : </b><span>{{session.intitule}}</span></p>
-    <p><b>Formateur référent : </b><span>{{session.formateur.nom}} {{session.formateur.prenom}}</span></p>
+    <p>
+      <b>Formation : </b><a href="{{ path('show_formation', {'id': session.formation.id}) }}">
+        {{session.formation.nomFormation}}
+      </a>
+    </p>
+    <p>
+      <b>Formateur référent : </b><a href="{{ path('show_formateur', {'id': session.formateur.id}) }}">
+        {{session.formateur.nom}} {{session.formateur.prenom}}
+      </a>
+    </p>
     <p><b>Date de début : </b><span>{{session.dateDebut | date("d/m/Y")}}</span></p>
     <p><b>Date de fin : </b><span>{{session.dateFin | date("d/m/Y")}}</span></p>
   </section>
@@ -59,8 +67,9 @@
               <span>{{prog.duree}} j. <i class="fa-solid fa-pen-to-square editButton"></i></span>
             </td>
             <td>
-              <a href="{{ path('remove_session_programme',{'idSession': session.id, 'idProgramme': prog.id}) }}"><i
-                  class="fa-solid fa-circle-xmark delete"></i></a>
+              <a href="{{ path('remove_session_programme',{'idSession': session.id, 'idProgramme': prog.id}) }}">
+                <i class="fa-solid fa-circle-xmark delete"></i>
+              </a>
             </td>
           </tr>
           {% endfor %}
@@ -76,7 +85,10 @@
 
         <div id="modules-container">
           {% for module in autresModules %}
-          <span><a href="{{ path('add_session_programme', {'id': module.id}) }}"></a>{{ module.nomModule }}</span>
+          <span>
+            <a href="{{ path('create_session_programme',{'idSession': session.id, 'idModule': module.id}) }}">
+              {{ module.nomModule }}
+            </a></span>
           {% endfor %}
         </div>
       </div>
