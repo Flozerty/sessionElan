@@ -3,21 +3,41 @@
 namespace App\Controller;
 
 use App\Entity\Formateur;
+use App\Form\FormateurType;
 use App\Repository\FormateurRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class FormateurController extends AbstractController
 {
     #[Route('/formateur', name: 'app_formateur')]
-    public function index(FormateurRepository $formateurRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, FormateurRepository $formateurRepository): Response
     {
+
+        // création du formulaire de création de formateur pour le modal
+        $formateur = new Formateur();
+        $form = $this->createForm(FormateurType::class, $formateur);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formateur = $form->getData();
+
+            // prepare() and execute()
+            $entityManager->persist($formateur);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_formateur');
+        }
+
         $formateurs = $formateurRepository->findBy([], ["nom" => "ASC"]);
 
         return $this->render('formateur/index.html.twig', [
             'activePage' => 'formateurs',
-            'formateurs' => $formateurs
+            'formateurs' => $formateurs,
+            'formAddFormateur' => $form,
         ]);
     }
 
