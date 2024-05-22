@@ -10,9 +10,9 @@
 
 <h1>Liste des formateurs</h1>
 
-<a href="#" class="addButton">
+<button class="addButton">
   <i class="fa-solid fa-circle-plus"></i> Créer un formateur
-</a>
+</button>
 
 <div id="components-container">
   {% for formateur in formateurs %}
@@ -32,4 +32,21 @@
   {% endfor %}
 </div>
 
+<dialog id="formateurDialog">
+
+  {{ form_start(formAddFormateur) }}
+  {{ form_row(formAddFormateur.nom) }}
+  {{ form_row(formAddFormateur.prenom) }}
+  <div>
+    <button type="button" id="cancel">Annuler</button>
+    <button type="submit">Confirmer</button>
+  </div>
+  {{ form_end(formAddFormateur) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

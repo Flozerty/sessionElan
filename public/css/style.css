@@ -162,8 +162,11 @@ section {
   background-color: #67DA73;
   padding: 10px 20px;
   border-radius: 15px;
+  border: 0;
   font-weight: bold;
-  width: fit-content;
+  font-size: inherit;
+  font-family: "IBM Plex Mono", monospace;
+  cursor: pointer;
 
   i {
     margin-right: 10px;
@@ -176,8 +179,18 @@ section {
   border-radius: 15px;
   font-weight: bold;
   text-decoration: underline;
+  border: 0;
+  font-size: inherit;
+  font-family: "IBM Plex Mono", monospace;
+  cursor: pointer;
 }
 
 .editButton {
   color: var(--darkbrown);
+  cursor: pointer;
+}
+
+dialog {
+  margin: auto;
+  padding: auto;
 }
