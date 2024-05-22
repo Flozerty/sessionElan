@@ -23,11 +23,27 @@
     </span>
 
     <span class="delete-link">
-      <a href="#">supprimer</a>
+      <a href="{{ path('delete_module', {'id': module.id}) }}">supprimer</a>
     </span>
   </div>
 
   {% endfor %}
 </div>
 
+<dialog id="moduleDialog">
+
+  {{ form_start(formAddModule) }}
+  {{ form_row(formAddModule.nom_module) }}
+  <div>
+    <button type="button" id="cancel">Annuler</button>
+    <button type="submit">Confirmer</button>
+  </div>
+  {{ form_end(formAddModule) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

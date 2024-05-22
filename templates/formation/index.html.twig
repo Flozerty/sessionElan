@@ -28,11 +28,27 @@
     </span>
 
     <span class="delete-link">
-      <a href="#">supprimer</a>
+      <a href="{{ path('delete_formation', {'id': formation.id}) }}">supprimer</a>
     </span>
   </div>
 
   {% endfor %}
 </div>
 
+<dialog id="formationDialog">
+
+  {{ form_start(formAddFormation) }}
+  {{ form_row(formAddFormation.nom_formation) }}
+  <div>
+    <button type="button" id="cancel">Annuler</button>
+    <button type="submit">Confirmer</button>
+  </div>
+  {{ form_end(formAddFormation) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}
