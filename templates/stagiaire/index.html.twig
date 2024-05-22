@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{asset('css/list.css')}}">
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -42,9 +43,15 @@
   {{ form_row(formAddStagiaire.ville) }}
   {{ form_row(formAddStagiaire.tel) }}
   {{ form_row(formAddStagiaire.email) }}
-  <div>
-    <button type="button" id="cancel">Annuler</button>
-    <button type="submit">Confirmer</button>
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-plus"></i>
+    </button>
   </div>
   {{ form_end(formAddStagiaire) }}
 

@@ -3,6 +3,7 @@
 {% block title %}Liste des formateurs{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 <link rel="stylesheet" href="{{asset('css/list.css')}}">
 {% endblock %}
 
@@ -37,9 +38,15 @@
   {{ form_start(formAddFormateur) }}
   {{ form_row(formAddFormateur.nom) }}
   {{ form_row(formAddFormateur.prenom) }}
-  <div>
-    <button type="button" id="cancel">Annuler</button>
-    <button type="submit">Confirmer</button>
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-plus"></i>
+    </button>
   </div>
   {{ form_end(formAddFormateur) }}
 

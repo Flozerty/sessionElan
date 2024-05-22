@@ -3,6 +3,7 @@
 {% block title %}Liste des sessions{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 <link rel="stylesheet" href="{{asset('css/table.css')}}">
 <link rel="stylesheet" href="{{asset('css/list.css')}}">
 {% endblock %}
@@ -37,14 +38,20 @@
 
   {{ form_start(formAddSession) }}
   {{ form_row(formAddSession.intitule) }}
+  {{ form_row(formAddSession.formation) }}
   {{ form_row(formAddSession.date_debut) }}
   {{ form_row(formAddSession.date_fin) }}
   {{ form_row(formAddSession.nb_places) }}
   {{ form_row(formAddSession.formateur) }}
-  {{ form_row(formAddSession.formation) }}
-  <div>
-    <button type="button" id="cancel">Annuler</button>
-    <button type="submit">Confirmer</button>
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-plus"></i>
+    </button>
   </div>
   {{ form_end(formAddSession) }}
 
