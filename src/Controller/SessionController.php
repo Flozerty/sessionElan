@@ -47,14 +47,15 @@ class SessionController extends AbstractController
   #[Route('/session/{id}', name: 'show_session')]
   public function show(Session $session, ModuleRepository $moduleRepository): Response
   {
+    // On récupère l'ensemble de tous les modules pour comparaison future
+    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
+
     // calcul de la durée totale des modules
     $dureeTotale = 0;
     $progs = $session->getProgrammes();
 
-    // On récupère l'ensemble de tous les modules pour comparaison future
-    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
-
     $modulesSession = [];
+    $autresModules = [];
 
     foreach ($progs as $prog) {
       // incrémentation de duréé totale
@@ -63,10 +64,8 @@ class SessionController extends AbstractController
       $modulesSession[] = $prog->getModule();
     }
 
-    $autresModules = [];
-
     foreach ($modules as $module) {
-      // si le module n'est pas dans 
+      // si le module n'est pas dans la session
       if (!in_array($module, $modulesSession)) {
         $autresModules[] = $module;
       }
@@ -80,7 +79,8 @@ class SessionController extends AbstractController
     ]);
   }
 
-  #[Route('/session/{idSession}/delete/programme/{idProgramme}', name: 'remove_session_programme')]
+  /////////////// Supprimer un programme de la session ///////////////
+  #[Route('/session/{idSession}/delete_programme/{idProgramme}', name: 'remove_session_programme')]
   public function remove(int $idSession, int $idProgramme, SessionRepository $sessionRepository, ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager)
   {
     $session = $sessionRepository->find($idSession);
@@ -90,11 +90,23 @@ class SessionController extends AbstractController
     return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
   }
 
-  #[Route('/session/{id}/add/programme', name: 'add_session_programme')]
-  public function add(Session $session, Programme $programme, EntityManagerInterface $entityManager)
+  /////////////// Ajouter (créer) un programme a la session ///////////////
+  #[Route('/session/{idSession}/create_programme/{idModule}', name: 'create_session_programme')]
+  public function add(int $idSession, int $idModule, SessionRepository $sessionRepository, ModuleRepository $moduleRepository, ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager)
   {
-    // $entityManager->add($programme);
-    // $entityManager->flush();
+    $session = $sessionRepository->find($idSession);
+    $module = $moduleRepository->find($idModule);
+
+    $programme = new Programme();
+
+    // un Programme ne peut pas avoir d'id NULL, on 'persist' le nouveau Programme pour lui attribuer un id automatiquement et qu'il n'y ait pas de problème.
+    $entityManager->persist($programme);
+    $programme->setModule($module);
+    $programme->setSession($session);
+    $programme->setDuree(0);
+
+    $entityManager->flush();
+
     return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
   }
 
