@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Listage des données de la table session.doctrine_migration_versions : ~1 rows (environ)
+-- Listage des données de la table session.doctrine_migration_versions : ~0 rows (environ)
 DELETE FROM `doctrine_migration_versions`;
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 	('DoctrineMigrations\\Version20240514141909', '2024-05-14 14:19:49', 531);
@@ -41,14 +41,14 @@ CREATE TABLE IF NOT EXISTS `formateur` (
   `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.formateur : ~3 rows (environ)
+-- Listage des données de la table session.formateur : ~2 rows (environ)
 DELETE FROM `formateur`;
 INSERT INTO `formateur` (`id`, `nom`, `prenom`) VALUES
 	(1, 'Mathieu', 'Quentin'),
-	(2, 'Murmann', 'Mickael'),
-	(3, 'Smail', 'Stéphane');
+	(3, 'Smail', 'Stéphane'),
+	(9, 'Murmann', 'Mickael');
 
 -- Listage de la structure de table session. formation
 DROP TABLE IF EXISTS `formation`;
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.messenger_messages : ~1 rows (environ)
+-- Listage des données de la table session.messenger_messages : ~0 rows (environ)
 DELETE FROM `messenger_messages`;
 INSERT INTO `messenger_messages` (`id`, `body`, `headers`, `queue_name`, `created_at`, `available_at`, `delivered_at`) VALUES
 	(1, 'O:36:\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\":2:{s:44:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\";a:1:{s:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\";a:1:{i:0;O:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\":1:{s:55:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\";s:21:\\"messenger.bus.default\\";}}}s:45:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\";O:51:\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\":2:{s:60:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\";O:39:\\"Symfony\\\\Bridge\\\\Twig\\\\Mime\\\\TemplatedEmail\\":5:{i:0;s:41:\\"registration/confirmation_email.html.twig\\";i:1;N;i:2;a:3:{s:9:\\"signedUrl\\";s:171:\\"http://127.0.0.1:8000/verify/email?expires=1715700958&signature=HU96wkbIoQAx4GDlS3xlYqLz5zkpfpLGl2a8PJ%2BMahA%3D&token=e%2FJHK%2FTNEIVWNl171n5lTLzp8o05aKc296vttSE%2BuWM%3D\\";s:19:\\"expiresAtMessageKey\\";s:26:\\"%count% hour|%count% hours\\";s:20:\\"expiresAtMessageData\\";a:1:{s:7:\\"%count%\\";i:1;}}i:3;a:6:{i:0;N;i:1;N;i:2;N;i:3;N;i:4;a:0:{}i:5;a:2:{i:0;O:37:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\":2:{s:46:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0headers\\";a:3:{s:4:\\"from\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:4:\\"From\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:25:\\"admin.session@exemple.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:13:\\"Session Admin\\";}}}}s:2:\\"to\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:2:\\"To\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:24:\\"floris.louerat@gmail.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:0:\\"\\";}}}}s:7:\\"subject\\";a:1:{i:0;O:48:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:7:\\"Subject\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:55:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\0value\\";s:25:\\"Please Confirm your Email\\";}}}s:49:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0lineLength\\";i:76;}i:1;N;}}i:4;N;}s:61:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0envelope\\";N;}}', '[]', 'default', '2024-05-14 14:35:59', '2024-05-14 14:35:59', NULL);
@@ -93,16 +93,15 @@ CREATE TABLE IF NOT EXISTS `module` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom_module` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.module : ~24 rows (environ)
+-- Listage des données de la table session.module : ~21 rows (environ)
 DELETE FROM `module`;
 INSERT INTO `module` (`id`, `nom_module`) VALUES
 	(1, 'javascript'),
 	(2, 'PHP'),
 	(3, 'symfony'),
 	(4, 'HTML'),
-	(5, 'CSS'),
 	(6, 'intégration web'),
 	(7, 'mathématiques appliquées'),
 	(8, 'probabilité'),
@@ -121,7 +120,8 @@ INSERT INTO `module` (`id`, `nom_module`) VALUES
 	(21, 'allumer un ordinateur'),
 	(22, 'éteindre un ordinateur'),
 	(23, 'le bouton gauche de la souris'),
-	(24, 'le bouton droit de la souris');
+	(24, 'le bouton droit de la souris'),
+	(25, 'CSS');
 
 -- Listage de la structure de table session. programme
 DROP TABLE IF EXISTS `programme`;
@@ -133,12 +133,17 @@ CREATE TABLE IF NOT EXISTS `programme` (
   PRIMARY KEY (`id`),
   KEY `IDX_3DDCB9FFAFC2B591` (`module_id`),
   KEY `IDX_3DDCB9FF613FECDF` (`session_id`),
-  CONSTRAINT `FK_3DDCB9FF613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`),
-  CONSTRAINT `FK_3DDCB9FFAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `FK_3DDCB9FF613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_3DDCB9FFAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.programme : ~0 rows (environ)
+-- Listage des données de la table session.programme : ~5 rows (environ)
 DELETE FROM `programme`;
+INSERT INTO `programme` (`id`, `module_id`, `session_id`, `duree`) VALUES
+	(4, 2, 1, 5),
+	(5, 1, 1, 8),
+	(7, 25, 1, 5),
+	(8, 4, 1, 2);
 
 -- Listage de la structure de table session. session
 DROP TABLE IF EXISTS `session`;
@@ -153,12 +158,18 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`id`),
   KEY `IDX_D044D5D4155D8F51` (`formateur_id`),
   KEY `IDX_D044D5D45200282E` (`formation_id`),
-  CONSTRAINT `FK_D044D5D4155D8F51` FOREIGN KEY (`formateur_id`) REFERENCES `formateur` (`id`),
-  CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `FK_D044D5D4155D8F51` FOREIGN KEY (`formateur_id`) REFERENCES `formateur` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.session : ~0 rows (environ)
+-- Listage des données de la table session.session : ~5 rows (environ)
 DELETE FROM `session`;
+INSERT INTO `session` (`id`, `formateur_id`, `formation_id`, `intitule`, `date_debut`, `date_fin`, `nb_places`) VALUES
+	(1, 9, 4, 'DWWM 1', '2024-02-21', '2024-04-21', 21),
+	(2, 1, 4, 'DWWM 2', '2024-02-21', '2024-06-21', 21),
+	(3, 3, 4, 'DWWM 3', '2024-10-21', '2025-05-21', 21),
+	(4, 9, 4, 'DWWM 4', '2024-10-21', '2024-12-21', 21),
+	(5, 1, 4, 'DWWM 5', '2024-04-21', '2024-05-25', 21);
 
 -- Listage de la structure de table session. session_stagiaire
 DROP TABLE IF EXISTS `session_stagiaire`;
@@ -172,8 +183,16 @@ CREATE TABLE IF NOT EXISTS `session_stagiaire` (
   CONSTRAINT `FK_C80B23BBBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.session_stagiaire : ~0 rows (environ)
+-- Listage des données de la table session.session_stagiaire : ~8 rows (environ)
 DELETE FROM `session_stagiaire`;
+INSERT INTO `session_stagiaire` (`session_id`, `stagiaire_id`) VALUES
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(1, 4),
+	(2, 1),
+	(3, 1),
+	(4, 1);
 
 -- Listage de la structure de table session. stagiaire
 DROP TABLE IF EXISTS `stagiaire`;
@@ -187,14 +206,14 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tel` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.stagiaire : ~5 rows (environ)
+-- Listage des données de la table session.stagiaire : ~4 rows (environ)
 DELETE FROM `stagiaire`;
 INSERT INTO `stagiaire` (`id`, `nom`, `prenom`, `sexe`, `date_naissance`, `ville`, `email`, `tel`) VALUES
 	(1, 'Balai', 'Philippe', 'Homme', '1654-11-20', 'Strasbourg', 'balai.philippe@bidule.com', '0654965166'),
 	(2, 'Bonnet', 'Maxime', 'Homme', '2012-05-17', 'Strasbourg', 'bonnet.maxime@bidule.com', '0741236489'),
-	(3, 'Poney', 'Alexandre', 'Homme', '1459-10-05', 'Strasbourg', 'poney.alexandre@bidule.com', '0745698247'),
+	(3, 'Poney', 'Alexandre', '', '1459-10-05', 'Strasbourg', 'poney.alexandre@bidule.com', '0745698247'),
 	(4, 'Rabais', 'Gino', 'Homme', '1951-12-06', 'Strasbourg', 'Rabais.gino@bidule.com', '0654893154'),
 	(5, 'Salé', 'Quentin', 'Homme', '1607-04-04', 'Strasbourg', 'sale.quentin@bidule.com', '0754198521');
 
@@ -210,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table session.user : ~1 rows (environ)
+-- Listage des données de la table session.user : ~0 rows (environ)
 DELETE FROM `user`;
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `is_verified`) VALUES
 	(1, 'floris.louerat@gmail.com', '[]', '$2y$13$ZHaWOzUDnQqlJUDWGNvmBe3rZ9dpn3CIWK1wQ8DruQtNs9pi4RQx.', 0);
