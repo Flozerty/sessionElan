@@ -10,7 +10,9 @@
 {% block body %}
 <h1>Session de {{session.intitule}}</h1>
 
-<a href="#" class="modifyButton">Modifier les infos</a>
+<a href="#" class="modifyButton">
+  Modifier les infos
+</a>
 
 <div id="session-content">
   <section id="session-infos">
@@ -57,7 +59,8 @@
               <span>{{prog.duree}} j. <i class="fa-solid fa-pen-to-square editButton"></i></span>
             </td>
             <td>
-              <i class="fa-solid fa-circle-xmark delete"></i>
+              <a href="{{ path('remove_session_programme',{'idSession': session.id, 'idProgramme': prog.id}) }}"><i
+                  class="fa-solid fa-circle-xmark delete"></i></a>
             </td>
           </tr>
           {% endfor %}
@@ -73,7 +76,7 @@
 
         <div id="modules-container">
           {% for module in autresModules %}
-          <span>{{ module.nomModule }}</span>
+          <span><a href="{{ path('add_session_programme', {'id': module.id}) }}"></a>{{ module.nomModule }}</span>
           {% endfor %}
         </div>
       </div>
@@ -94,9 +97,9 @@
       <p><b>Places libres : </b><span>{{session.nbPlaces - session.stagiaires | length}}</span></p>
     </div>
 
-    <a href="#" class="addButton">
+    <button class="addButton">
       <i class="fa-solid fa-circle-plus"></i> Ajouter un stagiaire
-    </a>
+    </button>
 
     {% if session.stagiaires is empty %}
 
@@ -142,9 +145,9 @@
       </tbody>
     </table>
 
-    <a href="#" class="addButton">
+    <button class="addButton">
       <i class="fa-solid fa-circle-plus"></i> Ajouter un stagiaire
-    </a>
+    </button>
 
     {% endif %}
 
