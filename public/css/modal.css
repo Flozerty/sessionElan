@@ -1,0 +1,44 @@
+dialog {
+  margin: auto;
+  padding: 20px;
+  border-color: var(--darkbrown);
+
+  input,
+  select,
+  option {
+    color: var(--darkbrown);
+    text-align: right;
+  }
+
+  form {
+    div {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+
+      label::after {
+        content: ":";
+      }
+    }
+  }
+
+  .modalNav {
+    justify-content: center;
+  }
+
+  button {
+    border: inherit;
+    background-color: inherit;
+    font-size: 2rem;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .fa-circle-plus {
+    color: green;
+  }
+
+  .fa-circle-xmark {
+    color: red;
+  }
+}
