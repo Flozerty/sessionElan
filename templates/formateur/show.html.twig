@@ -54,10 +54,11 @@
           {{session.dateFin | date("d/m/Y")}}
         </td>
         <td>
-          <i class="fa-solid fa-circle-xmark del-btn"></i>
+          <a href="{{ path('delete_formateur_formation', {'idSession': session.id, 'idFormateur': formateur.id}) }}">
+            <i class="fa-solid fa-circle-xmark del-btn"></i>
+          </a>
         </td>
       </tr>
-
 
       {% endfor %}
 

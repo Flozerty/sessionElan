@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Formateur;
+use App\Entity\Session;
 use App\Form\FormateurType;
 use App\Repository\FormateurRepository;
+use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,5 +58,16 @@ class FormateurController extends AbstractController
     $entityManager->flush();
 
     return $this->redirectToRoute('app_formateur');
+  }
+
+  #[Route('/formateur/{idFormateur}/remove_session/{idSession}', name: 'delete_formateur_formation')]
+  public function removeFormateur(int $idFormateur, int $idSession, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
+  {
+    $session = $sessionRepository->find($idSession);
+
+    $session->setFormateur(null);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('show_formateur', ['id' => $idFormateur]);
   }
 }
