@@ -36,6 +36,13 @@ p {
   margin: 10px 0;
 }
 
+p a:hover {
+  font-weight: 600;
+  transform: scale(1.05);
+  color: var(--darkbrown);
+  text-decoration: underline;
+}
+
 h1 {
   margin-bottom: 50px;
 }
@@ -188,9 +195,4 @@ section {
 .editButton {
   color: var(--darkbrown);
   cursor: pointer;
-}
-
-dialog {
-  margin: auto;
-  padding: auto;
 }
