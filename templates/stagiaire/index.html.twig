@@ -25,11 +25,34 @@
       <a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}"><i class="fa-solid fa-link"></i> voir les infos</a>
     </span>
     <span class="delete-link">
-      <a href="#">supprimer</a>
+      <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}">supprimer</a>
     </span>
   </div>
 
   {% endfor %}
 </div>
 
+<dialog id="formateurDialog">
+
+  {{ form_start(formAddStagiaire) }}
+  {{ form_row(formAddStagiaire.nom) }}
+  {{ form_row(formAddStagiaire.prenom) }}
+  {{ form_row(formAddStagiaire.date_naissance) }}
+  {{ form_row(formAddStagiaire.sexe) }}
+  {{ form_row(formAddStagiaire.ville) }}
+  {{ form_row(formAddStagiaire.tel) }}
+  {{ form_row(formAddStagiaire.email) }}
+  <div>
+    <button type="button" id="cancel">Annuler</button>
+    <button type="submit">Confirmer</button>
+  </div>
+  {# pas de form_end sinon on demande une session #}
+  {{ form_end(formAddStagiaire) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}
