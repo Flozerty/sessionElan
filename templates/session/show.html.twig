@@ -54,13 +54,12 @@
               {{prog.module.nomModule}}
             </th>
             <td>
-              {{prog.duree}} j.
+              <span>{{prog.duree}} j. <i class="fa-solid fa-pen-to-square editButton"></i></span>
             </td>
             <td>
-              <i class="fa-solid fa-circle-xmark"></i>
+              <i class="fa-solid fa-circle-xmark delete"></i>
             </td>
           </tr>
-
           {% endfor %}
           {% endif %}
 
@@ -86,13 +85,14 @@
   <hr>
 
   <section id="session-stagiaires">
+
+    <h3>Liste des stagiaires :</h3>
+
     <div id="session-places">
       <p><b>Places totales : </b><span>{{session.nbPlaces}}</span></p>
       <p><b>Participants : </b><span>{{session.stagiaires | length}}</span></p>
       <p><b>Places libres : </b><span>{{session.nbPlaces - session.stagiaires | length}}</span></p>
     </div>
-
-    <h3>Liste des stagiaires :</h3>
 
     <a href="#" class="addButton">
       <i class="fa-solid fa-circle-plus"></i> Ajouter un stagiaire

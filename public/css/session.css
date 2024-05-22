@@ -18,6 +18,15 @@
 #session-places {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px dotted black;
+  margin: 10px 0;
+
+  p {
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 0;
+  }
 }
 
 #session-stagiaires {
@@ -48,8 +57,12 @@
   }
 
   tbody {
-    i {
+    .delete {
       color: red;
+    }
+
+    i {
+      cursor: pointer;
     }
   }
 }
