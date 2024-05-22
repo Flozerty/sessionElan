@@ -48,4 +48,13 @@ class FormateurController extends AbstractController
       'formateur' => $formateur,
     ]);
   }
+
+  #[Route('/formateur/{id}/delete', name: 'delete_formateur')]
+  public function delete(Formateur $formateur, EntityManagerInterface $entityManager): Response
+  {
+    $entityManager->remove($formateur);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_formateur');
+  }
 }
