@@ -7,7 +7,7 @@ dialog {
   select,
   option {
     color: var(--darkbrown);
-    text-align: right;
+    text-align: left;
   }
 
   form {

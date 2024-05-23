@@ -50,24 +50,26 @@ class SessionController extends AbstractController
 
   //////////////////// Page de show session ////////////////////
   #[Route('/session/{id}', name: 'show_session')]
-  public function show(Session $session, ModuleRepository $moduleRepository, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Session $session = null, ModuleRepository $moduleRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
-    // création du formulaire de création de session pour le modal
-    $form = $this->createForm(SessionType::class, $session);
+    if ($session) {
+      // création du formulaire de création de session pour le modal
+      $form = $this->createForm(SessionType::class, $session);
 
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-      $session = $form->getData();
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $session = $form->getData();
 
-      // prepare() and execute()
-      $entityManager->persist($session);
-      $entityManager->flush();
+        // prepare() and execute()
+        $entityManager->persist($session);
+        $entityManager->flush();
 
-      return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+      }
+    } else {
+      return $this->redirectToRoute('app_session');
     }
 
-    // On récupère l'ensemble de tous les modules pour comparaison future
-    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
 
     // calcul de la durée totale des modules
     $dureeTotale = 0;
@@ -76,10 +78,12 @@ class SessionController extends AbstractController
     $modulesSession = [];
     $autresModules = [];
 
+    // On récupère l'ensemble de tous les modules
+    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
     foreach ($progs as $prog) {
       // incrémentation de duréé totale
       $dureeTotale += $prog->getDuree();
-      // on récupère tous les modules de la session pour récupérer ensuite tous les modules qui ne sont pas dedans
+      // on récupère tous les modules de la session
       $modulesSession[] = $prog->getModule();
     }
 
@@ -130,11 +134,12 @@ class SessionController extends AbstractController
 
   ////////////////////////// supprimer session //////////////////////////
   #[Route('/session/{id}/delete', name: 'delete_session')]
-  public function delete(Session $session, EntityManagerInterface $entityManager): Response
+  public function delete(Session $session = null, EntityManagerInterface $entityManager): Response
   {
-    $entityManager->remove($session);
-    $entityManager->flush();
-
+    if ($session) {
+      $entityManager->remove($session);
+      $entityManager->flush();
+    }
     return $this->redirectToRoute('app_session');
   }
 
