@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Formation;
 use App\Entity\Module;
 use App\Entity\Programme;
 use App\Entity\Session;
 use App\Form\SessionType;
+use App\Repository\FormationRepository;
 use App\Repository\ModuleRepository;
 use App\Repository\ProgrammeRepository;
 use App\Repository\SessionRepository;
+use App\Repository\StagiaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SessionController extends AbstractController
 {
+  //////////////////// Page de liste sessions ////////////////////
   #[Route('/session', name: 'app_session')]
   public function index(SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
@@ -44,9 +48,24 @@ class SessionController extends AbstractController
     ]);
   }
 
+  //////////////////// Page de show session ////////////////////
   #[Route('/session/{id}', name: 'show_session')]
-  public function show(Session $session, ModuleRepository $moduleRepository): Response
+  public function show(Session $session, ModuleRepository $moduleRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
+    // création du formulaire de création de session pour le modal
+    $form = $this->createForm(SessionType::class, $session);
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $session = $form->getData();
+
+      // prepare() and execute()
+      $entityManager->persist($session);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+    }
+
     // On récupère l'ensemble de tous les modules pour comparaison future
     $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
 
@@ -75,7 +94,7 @@ class SessionController extends AbstractController
       'session' => $session,
       'dureeTotale' => $dureeTotale,
       'autresModules' => $autresModules,
-
+      'formAddSession' => $form,
     ]);
   }
 
@@ -99,17 +118,17 @@ class SessionController extends AbstractController
 
     $programme = new Programme();
 
-    // un Programme ne peut pas avoir d'id NULL, on 'persist' le nouveau Programme pour lui attribuer un id automatiquement et qu'il n'y ait pas de problème.
-    $entityManager->persist($programme);
     $programme->setModule($module);
     $programme->setSession($session);
     $programme->setDuree(0);
 
+    $entityManager->persist($programme);
     $entityManager->flush();
 
     return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
   }
 
+  ////////////////////////// supprimer session //////////////////////////
   #[Route('/session/{id}/delete', name: 'delete_session')]
   public function delete(Session $session, EntityManagerInterface $entityManager): Response
   {
@@ -118,5 +137,32 @@ class SessionController extends AbstractController
 
     return $this->redirectToRoute('app_session');
   }
+
+  ////////////////// supprimer session depuis formation //////////////////
+  #[Route('/formation/{idFormation}/deleteSession/{idSession}', name: 'delete_session_formation')]
+  public function deleteSessionFormation(int $idFormation, int $idSession, EntityManagerInterface $entityManager, SessionRepository $sessionRepository, FormationRepository $formationRepository): Response
+  {
+    $session = $sessionRepository->find($idSession);
+    $formation = $formationRepository->find($idFormation);
+
+    $entityManager->remove($session);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('show_formation', ['id' => $idFormation]);
+  }
+
+  #[Route('/session/{idSession}/removeStagiaire/{idStagiaire}', name: 'remove_session_stagiaire')]
+  public function removeStagiaireSession(int $idSession, int $idStagiaire, SessionRepository $sessionRepository, StagiaireRepository $stagiaireRepository, EntityManagerInterface $entityManager): Response
+  {
+    $session = $sessionRepository->find($idSession);
+    $stagiaire = $stagiaireRepository->find($idStagiaire);
+
+    $session->removeStagiaire($stagiaire);
+    $entityManager->persist($session);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('show_session', ['id' => $idSession]);
+  }
+
 
 }
