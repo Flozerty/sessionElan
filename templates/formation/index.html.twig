@@ -20,7 +20,9 @@
 
   <div class="component">
     <span class="name">
-      {{formation.nomFormation}}
+      <a href="{{ path('show_formation', {'id': formation.id}) }}">
+        {{formation.nomFormation}}
+      </a>
     </span>
 
     <span class="link">
@@ -55,8 +57,4 @@
 
 </dialog>
 
-{% endblock %}
-
-{% block javascriptsBottom %}
-<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

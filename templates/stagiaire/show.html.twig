@@ -64,9 +64,9 @@
           {{session.dateFin | date("d/m/Y")}}
         </td>
         <td>
-          <a href="{{ path('remove_stagiaire_session', {'idSession': session.id, 'idStagiaire': stagiaire.id}) }}">
-
+          <a href="{{ path('remove_stagiaire_session', {'idStagiaire': stagiaire.id, 'idSession': session.id}) }}">
             <i class="fa-solid fa-circle-xmark del-btn"></i>
+          </a>
         </td>
       </tr>
 
@@ -102,8 +102,4 @@
 
 </dialog>
 
-{% endblock %}
-
-{% block javascriptsBottom %}
-<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

@@ -27,6 +27,12 @@ class FormationController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $formation = $form->getData();
 
+      // notif
+      $this->addFlash(
+        'success',
+        'La formation "' . $formation->getNomFormation() . '" a été créée'
+      );
+
       // prepare() and execute()
       $entityManager->persist($formation);
       $entityManager->flush();
@@ -45,75 +51,100 @@ class FormationController extends AbstractController
 
   ///////////////////// Page de show formation /////////////////////
   #[Route('/formation/{id}', name: 'show_formation')]
-  public function show(Formation $formation, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Formation $formation = null, Request $request, EntityManagerInterface $entityManager): Response
   {
-    // création du formulaire de modification de formation pour le modal
-    $formFormation = $this->createForm(FormationType::class, $formation);
+    // redirection si url indique un id non existant
+    if ($formation) {
 
-    $formFormation->handleRequest($request);
-    if ($formFormation->isSubmitted() && $formFormation->isValid()) {
-      $formation = $formFormation->getData();
+      // création du formulaire de modification de formation pour le modal
+      $formFormation = $this->createForm(FormationType::class, $formation);
+      $formFormation->handleRequest($request);
 
-      // prepare() and execute()
-      $entityManager->persist($formation);
-      $entityManager->flush();
+      if ($formFormation->isSubmitted() && $formFormation->isValid()) {
+        $formation = $formFormation->getData();
 
-      return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
-    }
+        // notif
+        $this->addFlash(
+          'modif',
+          'La formation "' . $formation->getNomFormation() . '" a été mise à jour'
+        );
 
+        // prepare() and execute()
+        $entityManager->persist($formation);
+        $entityManager->flush();
 
-    // création du formulaire de création de session pour le modal
-    $session = new Session();
-
-    $formSession = $this->createForm(SessionType::class, $session);
-
-    $formSession->handleRequest($request);
-    if ($formSession->isSubmitted() && $formSession->isValid()) {
-      $session = $formSession->getData();
-
-      // prepare() and execute()
-      $entityManager->persist($session);
-      $entityManager->flush();
-
-      return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
-    }
-
-
-    // répartition de toutes les sessions en "en cours / passées /futures"
-    $now = new \DateTime();
-    $sessionsNow = [];
-    $sessionsFuture = [];
-    $sessionsPast = [];
-
-    $allSessions = $formation->getSessions();
-
-    foreach ($allSessions as $session) {
-      if ($session->getDateDebut() > $now) {
-        $sessionsFuture[] = $session;
-      } elseif ($session->getDateFin() < $now) {
-        $sessionsPast[] = $session;
-      } else {
-        $sessionsNow[] = $session;
+        return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
       }
-    }
 
-    return $this->render('formation/show.html.twig', [
-      'formation' => $formation,
-      "sessionsNow" => $sessionsNow,
-      "sessionsFuture" => $sessionsFuture,
-      "sessionsPast" => $sessionsPast,
-      'formAddFormation' => $formFormation,
-      'formAddSession' => $formSession,
-    ]);
+
+      // création du formulaire de création de session pour le modal
+      $session = new Session();
+
+      $formSession = $this->createForm(SessionType::class, $session);
+
+      $formSession->handleRequest($request);
+      if ($formSession->isSubmitted() && $formSession->isValid()) {
+        $session = $formSession->getData();
+
+        // notif
+        $this->addFlash(
+          'success',
+          'La session "' . $session->getIntitule() . '" a été créée'
+        );
+
+        // prepare() and execute()
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
+      }
+
+
+      // répartition de toutes les sessions en "en cours / passées /futures"
+      $now = new \DateTime();
+      $sessionsNow = [];
+      $sessionsFuture = [];
+      $sessionsPast = [];
+
+      $allSessions = $formation->getSessions();
+
+      foreach ($allSessions as $session) {
+        if ($session->getDateDebut() > $now) {
+          $sessionsFuture[] = $session;
+        } elseif ($session->getDateFin() < $now) {
+          $sessionsPast[] = $session;
+        } else {
+          $sessionsNow[] = $session;
+        }
+      }
+
+      return $this->render('formation/show.html.twig', [
+        'formation' => $formation,
+        "sessionsNow" => $sessionsNow,
+        "sessionsFuture" => $sessionsFuture,
+        "sessionsPast" => $sessionsPast,
+        'formAddFormation' => $formFormation,
+        'formAddSession' => $formSession,
+      ]);
+    } else {
+      return $this->redirectToRoute('app_formation');
+    }
   }
 
   ///////////////////// suppression de formation /////////////////////
   #[Route('/formation/{id}/delete', name: 'delete_formation')]
-  public function delete(Formation $formation, EntityManagerInterface $entityManager): Response
+  public function delete(Formation $formation = null, EntityManagerInterface $entityManager): Response
   {
-    $entityManager->remove($formation);
-    $entityManager->flush();
+    if ($formation) {
+      // notif
+      $this->addFlash(
+        'success',
+        'La formation "' . $formation->getNomFormation() . '" et ses sessions ont été supprimées'
+      );
 
+      $entityManager->remove($formation);
+      $entityManager->flush();
+    }
     return $this->redirectToRoute('app_formation');
   }
 

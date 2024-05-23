@@ -24,6 +24,12 @@ class ModuleController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $module = $form->getData();
 
+      // notif
+      $this->addFlash(
+        'success',
+        'Le module "' . $module->getNomModule() . '" a été créé'
+      );
+
       // prepare() and execute()
       $entityManager->persist($module);
       $entityManager->flush();
@@ -41,11 +47,19 @@ class ModuleController extends AbstractController
   }
 
   #[Route('/module/{id}/delete', name: 'delete_module')]
-  public function delete(Module $module, EntityManagerInterface $entityManager): Response
+  public function delete(Module $module = null, EntityManagerInterface $entityManager): Response
   {
-    $entityManager->remove($module);
-    $entityManager->flush();
+    if ($module) {
 
+      // notif
+      $this->addFlash(
+        'warning',
+        'Le module "' . $module->getNomModule() . '" a été supprimé'
+      );
+
+      $entityManager->remove($module);
+      $entityManager->flush();
+    }
     return $this->redirectToRoute('app_module');
   }
 }

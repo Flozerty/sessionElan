@@ -27,6 +27,12 @@ class StagiaireController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $stagiaire = $form->getData();
 
+      // notif
+      $this->addFlash(
+        'success',
+        '"' . $stagiaire . '" a été créé'
+      );
+
       // prepare() and execute()
       $entityManager->persist($stagiaire);
       $entityManager->flush();
@@ -45,34 +51,53 @@ class StagiaireController extends AbstractController
 
   ////////////////////// Page de show stagiaire //////////////////////
   #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
-  public function show(Stagiaire $stagiaire, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager): Response
   {
-    $form = $this->createForm(StagiaireType::class, $stagiaire);
+    if ($stagiaire) {
+      $form = $this->createForm(StagiaireType::class, $stagiaire);
 
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-      $stagiaire = $form->getData();
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $stagiaire = $form->getData();
 
-      // prepare() and execute()
-      $entityManager->persist($stagiaire);
-      $entityManager->flush();
+        // notif
+        $this->addFlash(
+          'success',
+          'Informations de "' . $stagiaire . '" mises à jour'
+        );
 
-      return $this->redirectToRoute('show_stagiaire', ['id' => $stagiaire->getId()]);
+        // prepare() and execute()
+        $entityManager->persist($stagiaire);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_stagiaire', ['id' => $stagiaire->getId()]);
+      }
+
+      return $this->render('stagiaire/show.html.twig', [
+        'stagiaire' => $stagiaire,
+        'formAddStagiaire' => $form,
+      ]);
+    } else {
+      return $this->redirectToRoute("app_stagiaire");
     }
-
-    return $this->render('stagiaire/show.html.twig', [
-      'stagiaire' => $stagiaire,
-      'formAddStagiaire' => $form,
-    ]);
   }
 
   ////////////////////// suppression stagiaire //////////////////////
   #[Route('/stagiaire/{id}/delete', name: 'delete_stagiaire')]
-  public function delete(Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
+  public function delete(Stagiaire $stagiaire = null, EntityManagerInterface $entityManager): Response
   {
-    $entityManager->remove($stagiaire);
-    $entityManager->flush();
+    if ($stagiaire) {
 
+      // notif
+      $this->addFlash(
+        'warning',
+        'Vous avez supprimé "' . $stagiaire . '"'
+      );
+
+      $entityManager->remove($stagiaire);
+      $entityManager->flush();
+    }
+    // redirection auto si {id non existant}
     return $this->redirectToRoute('app_stagiaire');
   }
 
@@ -82,6 +107,12 @@ class StagiaireController extends AbstractController
   {
     $stagiaire = $stagiaireRepository->find($idStagiaire);
     $session = $sessionRepository->find($idSession);
+
+    // notif
+    $this->addFlash(
+      'warning',
+      '"' . $stagiaire . '" ne participe plus à "' . $session->getIntitule() . '"'
+    );
 
     $stagiaire->removeSession($session);
     $entityManager->flush();

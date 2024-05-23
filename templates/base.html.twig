@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
   {% block stylesheets %}{% endblock %}
 
-  {% block importmap %}{{ importmap('app') }}
   {% block javascripts %}
+  {% block importmap %}{{ importmap('app') }}
   {% endblock %}
 
   {% endblock %}
@@ -78,11 +78,20 @@
   </div>
 
   <footer>
-
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
+    <div class="flash-{{ label }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endfor %}
   </footer>
 
   <div id="bcgd-container"></div>
+
+
   {% block javascriptsBottom %}{% endblock %}
+  <script src="{{asset('js/modal.js')}}"></script>
 </body>
 
 </html>

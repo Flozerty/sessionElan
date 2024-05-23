@@ -32,6 +32,12 @@ class FormateurController extends AbstractController
       $entityManager->persist($formateur);
       $entityManager->flush();
 
+      // notif
+      $this->addFlash(
+        'success',
+        '"' . $formateur . '" a été créé'
+      );
+
       return $this->redirectToRoute('app_formateur');
     }
 
@@ -46,35 +52,53 @@ class FormateurController extends AbstractController
 
   ///////////////////// Page de show formateur /////////////////////
   #[Route('/formateur/{id}', name: 'show_formateur')]
-  public function show(Formateur $formateur, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Formateur $formateur = null, Request $request, EntityManagerInterface $entityManager): Response
   {
-    // création du formulaire de création de formateur pour le modal
-    $form = $this->createForm(FormateurType::class, $formateur);
+    // redirection si url indique un id non existant
+    if ($formateur) {
+      // création du formulaire de création de formateur pour le modal
+      $form = $this->createForm(FormateurType::class, $formateur);
 
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-      $formateur = $form->getData();
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $formateur = $form->getData();
 
-      // prepare() and execute()
-      $entityManager->persist($formateur);
-      $entityManager->flush();
+        // prepare() and execute()
+        $entityManager->persist($formateur);
+        $entityManager->flush();
 
-      return $this->redirectToRoute('show_formateur', ['id' => $formateur->getId()]);
+        // notif
+        $this->addFlash(
+          'success',
+          '"' . $formateur . '" à été mis à jour'
+        );
+
+        return $this->redirectToRoute('show_formateur', ['id' => $formateur->getId()]);
+      }
+
+      return $this->render('formateur/show.html.twig', [
+        'formateur' => $formateur,
+        'formAddFormateur' => $form,
+      ]);
+    } else {
+      return $this->redirectToRoute('app_formateur');
     }
-
-    return $this->render('formateur/show.html.twig', [
-      'formateur' => $formateur,
-      'formAddFormateur' => $form,
-    ]);
   }
-
   ///////////////////// suppression de formateur /////////////////////
   #[Route('/formateur/{id}/delete', name: 'delete_formateur')]
-  public function delete(Formateur $formateur, EntityManagerInterface $entityManager): Response
+  public function delete(Formateur $formateur = null, EntityManagerInterface $entityManager): Response
   {
-    $entityManager->remove($formateur);
-    $entityManager->flush();
+    if ($formateur) {
 
+      // notif
+      $this->addFlash(
+        'warning',
+        'Vous avez supprimé "' . $formateur . '"'
+      );
+
+      $entityManager->remove($formateur);
+      $entityManager->flush();
+    }
     return $this->redirectToRoute('app_formateur');
   }
 
@@ -85,6 +109,14 @@ class FormateurController extends AbstractController
     $session = $sessionRepository->find($idSession);
 
     $session->setFormateur(null);
+
+    // notif
+    $this->addFlash(
+      'warning',
+      'La session "' . $session->getIntitule() . '"' . " n'a plus de formateur référent"
+    );
+
+
     $entityManager->flush();
 
     return $this->redirectToRoute('show_formateur', ['id' => $idFormateur]);

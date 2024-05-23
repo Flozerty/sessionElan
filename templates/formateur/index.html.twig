@@ -15,12 +15,15 @@
   <i class="fa-solid fa-circle-plus"></i> Créer un formateur
 </button>
 
+{# Liste des formateurs #}
 <div id="components-container">
   {% for formateur in formateurs %}
 
   <div class="component">
     <span class="name">
-      {{formateur.nom}} {{formateur.prenom}}
+      <a href="{{ path('show_formateur', {'id': formateur.id}) }}">
+        {{formateur.nom}} {{formateur.prenom}}
+      </a>
     </span>
     <span class="link">
       <a href="{{ path('show_formateur', {'id': formateur.id}) }}"><i class="fa-solid fa-link"></i> voir les infos</a>
@@ -33,6 +36,7 @@
   {% endfor %}
 </div>
 
+{# dialog pour modal form création de formateur #}
 <dialog id="formateurDialog" class="dialogAdd">
 
   {{ form_start(formAddFormateur) }}
@@ -52,8 +56,4 @@
 
 </dialog>
 
-{% endblock %}
-
-{% block javascriptsBottom %}
-<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}
