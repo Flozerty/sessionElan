@@ -3,6 +3,7 @@
 {% block title %}{{formation.nomFormation}}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 <link rel="stylesheet" href="{{asset('css/formation.css')}}">
 <link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
@@ -11,7 +12,7 @@
 
 <h1>{{formation.nomFormation}}</h1>
 
-<a href="#" class="modifyButton">Modifier les infos</a>
+<button class="modifyButton">Modifier les infos</button>
 
 <section id="formation-infos">
   <p><b>Nom : </b><span>{{formation.nomFormation}}</span></p>
@@ -20,6 +21,10 @@
 <hr>
 
 {# #################### SESSIONS EN COURS #################### #}
+
+<button class="addButton">
+  <i class="fa-solid fa-circle-plus"></i> Créer une session
+</button>
 
 
 <section id="formation-sessionsNow">
@@ -47,17 +52,15 @@
           </a>
         </th>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateDebut | date("d/m/Y")}}
-          </a>
+          {{session.dateDebut | date("d/m/Y")}}
         </td>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateFin | date("d/m/Y")}}
-          </a>
+          {{session.dateFin | date("d/m/Y")}}
         </td>
         <td>
-          <i class="fa-solid fa-circle-xmark del-btn"></i>
+          <a href="{{ path('delete_session_formation', {'idSession': session.id, 'idFormation': formation.id}) }}">
+            <i class="fa-solid fa-circle-xmark del-btn"></i>
+          </a>
         </td>
       </tr>
 
@@ -104,17 +107,15 @@
           </a>
         </th>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateDebut | date("d/m/Y")}}
-          </a>
+          {{session.dateDebut | date("d/m/Y")}}
         </td>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateFin | date("d/m/Y")}}
-          </a>
+          {{session.dateFin | date("d/m/Y")}}
         </td>
         <td>
-          <i class="fa-solid fa-circle-xmark del-btn"></i>
+          <a href="{{ path('delete_session_formation', {'idSession': session.id, 'idFormation': formation.id}) }}">
+            <i class="fa-solid fa-circle-xmark del-btn"></i>
+          </a>
         </td>
       </tr>
 
@@ -159,17 +160,15 @@
           </a>
         </th>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateDebut | date("d/m/Y")}}
-          </a>
+          {{session.dateDebut | date("d/m/Y")}}
         </td>
         <td>
-          <a href="{{ path('show_session', {'id': session.id}) }}">
-            {{session.dateFin | date("d/m/Y")}}
-          </a>
+          {{session.dateFin | date("d/m/Y")}}
         </td>
         <td>
-          <i class="fa-solid fa-circle-xmark del-btn"></i>
+          <a href="{{ path('delete_session_formation', {'idSession': session.id, 'idFormation': formation.id}) }}">
+            <i class="fa-solid fa-circle-xmark del-btn"></i>
+          </a>
         </td>
       </tr>
 
@@ -186,4 +185,51 @@
 
 </section>
 <hr>
+
+<dialog id="formationDialog" class="dialogModify">
+
+  {{ form_start(formAddFormation) }}
+  {{ form_row(formAddFormation.nom_formation) }}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-check"></i>
+    </button>
+  </div>
+  {{ form_end(formAddFormation) }}
+
+</dialog>
+
+<dialog id="sessionDialog" class="dialogAdd">
+
+  {{ form_start(formAddSession) }}
+
+  {{ form_row(formAddSession.intitule) }}
+  {{ form_row(formAddSession.formation) }}
+  {{ form_row(formAddSession.date_debut) }}
+  {{ form_row(formAddSession.date_fin) }}
+  {{ form_row(formAddSession.nb_places) }}
+  {{ form_row(formAddSession.formateur) }}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-check"></i>
+    </button>
+  </div>
+  {{ form_end(formAddSession) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

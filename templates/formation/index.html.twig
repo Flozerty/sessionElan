@@ -36,7 +36,7 @@
   {% endfor %}
 </div>
 
-<dialog id="formationDialog">
+<dialog id="formationDialog" class="dialogAdd">
 
   {{ form_start(formAddFormation) }}
   {{ form_row(formAddFormation.nom_formation) }}
@@ -47,7 +47,7 @@
     </button>
 
     <button type="submit">
-      <i class="fa-solid fa-circle-plus"></i>
+      <i class="fa-solid fa-circle-check"></i>
     </button>
   </div>
 

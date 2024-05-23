@@ -3,6 +3,7 @@
 {% block title %}Session de {{session.intitule}}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 <link rel="stylesheet" href="{{asset('css/session.css')}}">
 <link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
@@ -10,9 +11,7 @@
 {% block body %}
 <h1>Session de {{session.intitule}}</h1>
 
-<a href="#" class="modifyButton">
-  Modifier les infos
-</a>
+<button class="modifyButton">Modifier les infos</button>
 
 <div id="session-content">
   <section id="session-infos">
@@ -138,17 +137,15 @@
             </a>
           </th>
           <td>
-            <a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}">
-              {{stagiaire.email}}
-            </a>
+            {{stagiaire.email}}
           </td>
           <td>
-            <a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}">
-              {{stagiaire.tel}}
-            </a>
+            {{stagiaire.tel}}
           </td>
           <td>
-            <i class="fa-solid fa-circle-xmark del-btn"></i>
+            <a href="{{ path('remove_session_stagiaire', {'idStagiaire': stagiaire.id, 'idSession':session.id}) }}">
+              <i class="fa-solid fa-circle-xmark del-btn"></i>
+            </a>
           </td>
         </tr>
 
@@ -165,4 +162,49 @@
 
   </section>
 </div>
+
+<dialog id="sessionDialog" class="dialogModify">
+
+  {{ form_start(formAddSession) }}
+  {{ form_row(formAddSession.intitule) }}
+  {{ form_row(formAddSession.formation) }}
+  {{ form_row(formAddSession.date_debut) }}
+  {{ form_row(formAddSession.date_fin) }}
+  {{ form_row(formAddSession.nb_places) }}
+  {{ form_row(formAddSession.formateur) }}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-check"></i>
+    </button>
+  </div>
+
+</dialog>
+
+<dialog id="stagiaireDialog" class="dialogAdd">
+
+
+  {{ form_row(formAddSession.stagiaires) }}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-check"></i>
+    </button>
+  </div>
+  {{ form_end(formAddSession) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

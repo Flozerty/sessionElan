@@ -34,7 +34,7 @@
   {% endfor %}
 </div>
 
-<dialog id="sessionDialog">
+<dialog id="sessionDialog" class="dialogAdd">
 
   {{ form_start(formAddSession) }}
   {{ form_row(formAddSession.intitule) }}
@@ -50,7 +50,7 @@
     </button>
 
     <button type="submit">
-      <i class="fa-solid fa-circle-plus"></i>
+      <i class="fa-solid fa-circle-check"></i>
     </button>
   </div>
   {{ form_end(formAddSession) }}

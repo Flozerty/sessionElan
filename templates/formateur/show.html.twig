@@ -3,6 +3,7 @@
 {% block title %}{{formateur.nom}} {{formateur.prenom}}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 <link rel="stylesheet" href="{{asset('css/formateur.css')}}">
 <link rel="stylesheet" href="{{asset('css/table.css')}}">
 {% endblock %}
@@ -11,7 +12,7 @@
 
 <h1>{{formateur.nom}} {{formateur.prenom}}</h1>
 
-<a href="#" class="modifyButton">Modifier les infos</a>
+<button class="modifyButton">Modifier les infos</button>
 
 <section id="formateur-infos">
   <p><b>Nom : </b><span>{{formateur.nom}}</span></p>
@@ -45,7 +46,9 @@
 
       <tr>
         <th>
-          {{session.intitule}}
+          <a href="{{ path('show_session', {'id': session.id}) }}">
+            {{session.intitule}}
+          </a>
         </th>
         <td>
           {{session.dateDebut | date("d/m/Y")}}
@@ -68,4 +71,27 @@
 
 </section>
 
+<dialog id="formateurDialog" class="dialogModify">
+
+  {{ form_start(formAddFormateur) }}
+  {{ form_row(formAddFormateur.nom) }}
+  {{ form_row(formAddFormateur.prenom) }}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
+    <button type="submit">
+      <i class="fa-solid fa-circle-check"></i>
+    </button>
+  </div>
+  {{ form_end(formAddFormateur) }}
+
+</dialog>
+
+{% endblock %}
+
+{% block javascriptsBottom %}
+<script src="{{asset('js/modal.js')}}"></script>
 {% endblock %}

@@ -33,7 +33,7 @@
   {% endfor %}
 </div>
 
-<dialog id="formateurDialog">
+<dialog id="formateurDialog" class="dialogAdd">
 
   {{ form_start(formAddStagiaire) }}
   {{ form_row(formAddStagiaire.nom) }}
@@ -50,7 +50,7 @@
     </button>
 
     <button type="submit">
-      <i class="fa-solid fa-circle-plus"></i>
+      <i class="fa-solid fa-circle-check"></i>
     </button>
   </div>
   {{ form_end(formAddStagiaire) }}
