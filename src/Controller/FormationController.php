@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Formation;
+use App\Entity\Session;
 use App\Form\FormationType;
+use App\Form\SessionType;
 use App\Repository\FormationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FormationController extends AbstractController
 {
+  //////////////////// Page de liste formations ////////////////////
   #[Route('/formation', name: 'app_formation')]
   public function index(FormationRepository $formationRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
@@ -40,9 +43,41 @@ class FormationController extends AbstractController
     ]);
   }
 
+  ///////////////////// Page de show formation /////////////////////
   #[Route('/formation/{id}', name: 'show_formation')]
-  public function show(Formation $formation): Response
+  public function show(Formation $formation, Request $request, EntityManagerInterface $entityManager): Response
   {
+    // création du formulaire de modification de formation pour le modal
+    $formFormation = $this->createForm(FormationType::class, $formation);
+
+    $formFormation->handleRequest($request);
+    if ($formFormation->isSubmitted() && $formFormation->isValid()) {
+      $formation = $formFormation->getData();
+
+      // prepare() and execute()
+      $entityManager->persist($formation);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
+    }
+
+
+    // création du formulaire de création de session pour le modal
+    $session = new Session();
+
+    $formSession = $this->createForm(SessionType::class, $session);
+
+    $formSession->handleRequest($request);
+    if ($formSession->isSubmitted() && $formSession->isValid()) {
+      $session = $formSession->getData();
+
+      // prepare() and execute()
+      $entityManager->persist($session);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('show_formation', ['id' => $formation->getId()]);
+    }
+
 
     // répartition de toutes les sessions en "en cours / passées /futures"
     $now = new \DateTime();
@@ -67,9 +102,12 @@ class FormationController extends AbstractController
       "sessionsNow" => $sessionsNow,
       "sessionsFuture" => $sessionsFuture,
       "sessionsPast" => $sessionsPast,
+      'formAddFormation' => $formFormation,
+      'formAddSession' => $formSession,
     ]);
   }
 
+  ///////////////////// suppression de formation /////////////////////
   #[Route('/formation/{id}/delete', name: 'delete_formation')]
   public function delete(Formation $formation, EntityManagerInterface $entityManager): Response
   {

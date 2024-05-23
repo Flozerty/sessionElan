@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FormateurController extends AbstractController
 {
+  ///////////////////// Page de show formateur /////////////////////
   #[Route('/formateur', name: 'app_formateur')]
   public function index(Request $request, EntityManagerInterface $entityManager, FormateurRepository $formateurRepository): Response
   {
@@ -43,14 +44,31 @@ class FormateurController extends AbstractController
     ]);
   }
 
+  ///////////////////// Page de show formateur /////////////////////
   #[Route('/formateur/{id}', name: 'show_formateur')]
-  public function show(Formateur $formateur): Response
+  public function show(Formateur $formateur, Request $request, EntityManagerInterface $entityManager): Response
   {
+    // création du formulaire de création de formateur pour le modal
+    $form = $this->createForm(FormateurType::class, $formateur);
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $formateur = $form->getData();
+
+      // prepare() and execute()
+      $entityManager->persist($formateur);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('show_formateur', ['id' => $formateur->getId()]);
+    }
+
     return $this->render('formateur/show.html.twig', [
       'formateur' => $formateur,
+      'formAddFormateur' => $form,
     ]);
   }
 
+  ///////////////////// suppression de formateur /////////////////////
   #[Route('/formateur/{id}/delete', name: 'delete_formateur')]
   public function delete(Formateur $formateur, EntityManagerInterface $entityManager): Response
   {
@@ -60,6 +78,7 @@ class FormateurController extends AbstractController
     return $this->redirectToRoute('app_formateur');
   }
 
+  /////////////// suppression de formateur d'une session ///////////////
   #[Route('/formateur/{idFormateur}/remove_session/{idSession}', name: 'delete_formateur_formation')]
   public function removeFormateur(int $idFormateur, int $idSession, SessionRepository $sessionRepository, EntityManagerInterface $entityManager): Response
   {
