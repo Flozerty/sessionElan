@@ -4,6 +4,11 @@
 
 {% block body %}
 
-Yo {{app.user is defined ? app.user.email : "pas co" }}
+Yo
+{% if app.user is not empty %}
+{{app.user.email}}
+{% else %}
+pas co
+{% endif %}
 
 {% endblock %}
