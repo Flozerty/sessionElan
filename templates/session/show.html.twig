@@ -75,9 +75,11 @@
 
               <form class="moduleForm" method="post"
                 action="{{ path('session_update_programme', {'idSession': session.id, 'idProgramme' : prog.id}) }}">
+
                 <label for=" duree">Durée : </label>
                 <input type="number" min="0" name="duree" id="duree_prog{{ prog.id }}">
-                <input type="submit" value="valider">
+
+                {# <input type="submit" value="valider"> #}
               </form>
             </td>
 
@@ -141,6 +143,7 @@
           <th>Nom</th>
           <th>Email</th>
           <th>Tel</th>
+          <th></th>
         </tr>
       </thead>
 

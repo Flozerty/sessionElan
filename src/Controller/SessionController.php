@@ -161,6 +161,7 @@ class SessionController extends AbstractController
         'durée du programme mise à jour'
       );
       $entityManager->flush();
+
     } else {
       // notif
       $this->addFlash(

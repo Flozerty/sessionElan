@@ -68,6 +68,10 @@
       <a href="#">admin</a>
       {% endif %}
     </div>
+    <div id="menu-display">
+      <i class="fa-solid fa-bars toggle-menu"></i>
+      <i class="fa-solid fa-xmark close-menu"></i>
+    </div>
   </header>
 
   <div id="main-wrapper">
@@ -89,9 +93,9 @@
 
   <div id="bcgd-container"></div>
 
-
   {% block javascriptsBottom %}{% endblock %}
   <script src="{{asset('js/modal.js')}}"></script>
+  <script src="{{asset('js/menuBurger.js')}}"></script>
 </body>
 
 </html>

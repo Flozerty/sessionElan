@@ -71,6 +71,10 @@
   }
 }
 
+.showDuree {
+  display: inline;
+}
+
 #otherModulesContainer {
   max-width: 50%;
   background-color: white;
@@ -114,4 +118,15 @@
 
 #session-modules {
   margin-bottom: 50px;
+}
+
+@media screen and (max-width: 1000px) {
+  #session-wrapper {
+    flex-direction: column;
+  }
+
+  #modulesTable,
+  #otherModulesContainer {
+    max-width: 100%;
+  }
 }
