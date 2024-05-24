@@ -6,6 +6,7 @@ use App\Entity\Formation;
 use App\Entity\Module;
 use App\Entity\Programme;
 use App\Entity\Session;
+use App\Form\ProgrammeType;
 use App\Form\SessionType;
 use App\Repository\FormationRepository;
 use App\Repository\ModuleRepository;
@@ -130,6 +131,44 @@ class SessionController extends AbstractController
     $entityManager->flush();
 
     return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+  }
+
+  /////////////// update le programme d'une  session ///////////////
+  #[Route('/session/{idSession}/update_programme/{idProgramme}', name: 'session_update_programme')]
+  public function updateProgramme(int $idSession, int $idProgramme, Request $request, SessionRepository $sessionRepository, ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager)
+  {
+    $session = $sessionRepository->find($idSession);
+    $programme = $programmeRepository->find($idProgramme);
+
+    // Vérifier si le programme existe et appartient à la session
+    if (!$programme) {
+      // notif
+      $this->addFlash(
+        'warning',
+        'programme inexistant'
+      );
+      return $this->redirectToRoute('app_session');
+    }
+
+    $duree = $request->request->get('duree');
+
+    if (is_numeric($duree) && !empty($duree) && $duree >= 0) {
+
+      $programme->setDuree($duree);
+      // notif
+      $this->addFlash(
+        'success',
+        'durée du programme mise à jour'
+      );
+      $entityManager->flush();
+    } else {
+      // notif
+      $this->addFlash(
+        'warning',
+        'durée non conforme'
+      );
+    }
+    return $this->redirectToRoute('show_session', ['id' => $idSession]);
   }
 
   ////////////////////////// supprimer session //////////////////////////

@@ -73,12 +73,12 @@
             <td class="progDuree">
               <span class="showDuree">{{prog.duree}} j. <i class="fa-solid fa-pen-to-square editButton"></i></span>
 
-              {# <form class="moduleForm" action="{{ path(" session_update_programme", {'idSession':
-                session.id, 'idProgramme' : prog.id})}}">
-                <label for="test">Durée : </label>
-                <input type="text" name="test">
+              <form class="moduleForm" method="post"
+                action="{{ path('session_update_programme', {'idSession': session.id, 'idProgramme' : prog.id}) }}">
+                <label for=" duree">Durée : </label>
+                <input type="number" min="0" name="duree" id="duree_prog{{ prog.id }}">
                 <input type="submit" value="valider">
-              </form> #}
+              </form>
             </td>
 
             <td>
