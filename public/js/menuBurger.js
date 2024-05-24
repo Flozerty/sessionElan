@@ -10,12 +10,22 @@ toggleMenu.addEventListener('click', () => {
   nav.style.transform = 'translateX(0)';
   menuOpen = true;
   checkMenu()
+
 })
 
 closeMenu.addEventListener('click', () => {
   nav.style.transform = 'translateX(110%)';
   menuOpen = false;
   checkMenu()
+})
+
+// si on clique hors du header
+document.addEventListener('click', (event) => {
+  if (!nav.contains(event.target) && !toggleMenu.contains(event.target)) {
+    nav.style.transform = 'translateX(110%)';
+    menuOpen = false;
+    checkMenu()
+  }
 })
 
 function checkMenu() {
