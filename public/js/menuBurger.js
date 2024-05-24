@@ -21,7 +21,7 @@ closeMenu.addEventListener('click', () => {
 
 // si on clique hors du header
 document.addEventListener('click', (event) => {
-  if (!nav.contains(event.target) && !toggleMenu.contains(event.target) && menuOpen) {
+  if (!nav.contains(event.target) && !toggleMenu.contains(event.target) && window.innerWidth <= 1000) {
     nav.style.transform = 'translateX(110%)';
     menuOpen = false;
     checkMenu()
