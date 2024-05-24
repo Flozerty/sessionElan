@@ -22,9 +22,16 @@
       </a>
     </p>
     <p>
-      <b>Formateur référent : </b><a href="{{ path('show_formateur', {'id': session.formateur.id}) }}">
+      <b>Formateur référent : </b>
+
+      {% if session.formateur is not empty %}
+      <a href="{{ path('show_formateur', {'id': session.formateur.id}) }}">
         {{session.formateur.nom}} {{session.formateur.prenom}}
       </a>
+      {% else %}
+      Aucun formateur.
+      {% endif %}
+
     </p>
     <p><b>Date de début : </b><span>{{session.dateDebut | date("d/m/Y")}}</span></p>
     <p><b>Date de fin : </b><span>{{session.dateFin | date("d/m/Y")}}</span></p>
