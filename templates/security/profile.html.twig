@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+Yo
+{% if app.user is not empty %}
+{{app.user.email}}
+<a href="{{path('app_delete_account')}}">supprimer le compte</a>
+{% else %}
+pas co
+{% endif %}
+
+{% endblock %}
