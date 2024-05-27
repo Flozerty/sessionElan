@@ -1,3 +1,13 @@
 #stagiaire-infos {
   align-self: baseline;
 }
+
+#stagiaire-sessions {
+  display: flex;
+  flex-direction: column;
+}
+
+.addButton {
+  align-self: center;
+  margin: 50px 0;
+}

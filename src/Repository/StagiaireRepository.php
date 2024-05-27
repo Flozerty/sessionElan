@@ -40,4 +40,24 @@ class StagiaireRepository extends ServiceEntityRepository
   //            ->getOneOrNullResult()
   //        ;
   //    }
+
+  public function findNonSessions($id)
+  {
+    $em = $this->getEntityManager();
+
+    $qb = $em->createQueryBuilder();
+    $qb->select('ss')
+      ->from('App\Entity\Session', 'ss')
+      ->leftJoin('ss.stagiaires', 's')
+      ->where('s.id = :id');
+
+    $sub = $em->createQueryBuilder();
+    $sub->select('se')
+      ->from('App\Entity\Session', 'se')
+      ->where($sub->expr()->notIn('se.id', $qb->getDQL()))
+      ->setParameter('id', $id);
+
+    $query = $sub->getQuery();
+    return $query->getResult();
+  }
 }

@@ -51,7 +51,7 @@ class StagiaireController extends AbstractController
 
   ////////////////////// Page de show stagiaire //////////////////////
   #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
-  public function show(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager, StagiaireRepository $stagiaireRepository): Response
   {
     if ($stagiaire) {
       $form = $this->createForm(StagiaireType::class, $stagiaire);
@@ -73,9 +73,12 @@ class StagiaireController extends AbstractController
         return $this->redirectToRoute('show_stagiaire', ['id' => $stagiaire->getId()]);
       }
 
+      $autresSessions = $stagiaireRepository->findNonSessions($stagiaire->getId());
+
       return $this->render('stagiaire/show.html.twig', [
         'stagiaire' => $stagiaire,
         'formAddStagiaire' => $form,
+        'autresSessions' => $autresSessions,
       ]);
     } else {
       return $this->redirectToRoute("app_stagiaire");

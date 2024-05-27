@@ -164,6 +164,13 @@ footer {
   position: absolute;
 }
 
+#copy {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 main {
   display: flex;
   flex-direction: column;
