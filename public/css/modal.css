@@ -2,7 +2,7 @@ dialog {
   margin: auto;
   padding: 20px;
   border-color: var(--darkbrown);
-  min-width: 30%;
+  min-width: 25%;
   text-align: center;
 
   input,

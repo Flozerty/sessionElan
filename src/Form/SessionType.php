@@ -26,11 +26,14 @@ class SessionType extends AbstractType
             ->add('nb_places')
             ->add('formateur', EntityType::class, [
                 'class' => Formateur::class,
-                'choice_label' => 'nom',
+                // 'choice_label' => 'nom',
+                'placeholder' => 'choisissez un formateur',
+                'required' => true,
             ])
             ->add('formation', EntityType::class, [
                 'class' => Formation::class,
                 'choice_label' => 'nom_formation',
+                'placeholder' => 'choisissez une formation',
             ])
         ;
     }
