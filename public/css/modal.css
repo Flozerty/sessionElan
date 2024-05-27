@@ -2,6 +2,8 @@ dialog {
   margin: auto;
   padding: 20px;
   border-color: var(--darkbrown);
+  min-width: 30%;
+  text-align: center;
 
   input,
   select,
@@ -23,6 +25,7 @@ dialog {
   }
 
   .modalNav {
+    display: flex;
     justify-content: center;
   }
 
