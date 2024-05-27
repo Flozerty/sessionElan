@@ -4,11 +4,11 @@
 
 {% block body %}
 
-Yo
+
 {% if app.user is not empty %}
-{{app.user.email}}
+Yo {{app.user.email}}
 {% else %}
-pas co
+Home
 {% endif %}
 
 {% endblock %}
