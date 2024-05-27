@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+
 <h1>Session de {{session.intitule}}</h1>
 
 <button class="modifyButton">Modifier les infos</button>
@@ -192,6 +193,7 @@
   {{ form_row(formAddSession.date_fin) }}
   {{ form_row(formAddSession.nb_places) }}
   {{ form_row(formAddSession.formateur) }}
+  {{ form_end(formAddSession) }}
 
   <div class="modalNav">
     <button type="button" class="cancel">
@@ -207,23 +209,23 @@
 
 <dialog id="stagiaireDialog" class="dialogAdd">
 
-  {{ form_row(formAddSession.stagiaires) }}
+  {% for stagiaire in autresStagiaires %}
+  <a href="{{path('add_session_stagiaire', {'idSession': session.id, 'idStagiaire': stagiaire.id})}}">
+    <p class="stagiaireForm">{{stagiaire}}</p>
+  </a>
+  {% endfor %}
 
   <div class="modalNav">
     <button type="button" class="cancel">
       <i class="fa-solid fa-circle-xmark"></i>
     </button>
-
-    <button type="submit">
-      <i class="fa-solid fa-circle-check"></i>
-    </button>
   </div>
-  {{ form_end(formAddSession) }}
-
 </dialog>
 
 {% endblock %}
 
-{% block javascriptsBottom %}
+{% block javascripts %}
+<script src="{{asset('js/modal.js')}}"></script>
+<script src="{{asset('js/menuBurger.js')}}"></script>
 <script src="{{asset('js/sessionModule.js')}}"></script>
 {% endblock %}

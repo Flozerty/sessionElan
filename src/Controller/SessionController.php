@@ -51,7 +51,7 @@ class SessionController extends AbstractController
 
   //////////////////// Page de show session ////////////////////
   #[Route('/session/{id}', name: 'show_session')]
-  public function show(Session $session = null, ModuleRepository $moduleRepository, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Session $session = null, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
     if ($session) {
       // création du formulaire de création de session pour le modal
@@ -76,30 +76,20 @@ class SessionController extends AbstractController
     $dureeTotale = 0;
     $progs = $session->getProgrammes();
 
-    $modulesSession = [];
-    $autresModules = [];
-
-    // On récupère l'ensemble de tous les modules
-    $modules = $moduleRepository->findBy([], ["nom_module" => "ASC"]);
     foreach ($progs as $prog) {
       // incrémentation de duréé totale
       $dureeTotale += $prog->getDuree();
-      // on récupère tous les modules de la session
-      $modulesSession[] = $prog->getModule();
     }
 
-    foreach ($modules as $module) {
-      // si le module n'est pas dans la session
-      if (!in_array($module, $modulesSession)) {
-        $autresModules[] = $module;
-      }
-    }
+    $autresModules = $sessionRepository->findNonProgrammes($session->getId());
+    $autresStagiaires = $sessionRepository->findNonStagiaires($session->getId());
 
     return $this->render('session/show.html.twig', [
       'session' => $session,
       'dureeTotale' => $dureeTotale,
       'autresModules' => $autresModules,
       'formAddSession' => $form,
+      'autresStagiaires' => $autresStagiaires,
     ]);
   }
 
@@ -196,6 +186,26 @@ class SessionController extends AbstractController
     return $this->redirectToRoute('show_formation', ['id' => $idFormation]);
   }
 
+  #[Route('/session/{idSession}/addStagiaire/{idStagiaire}', name: 'add_session_stagiaire')]
+  #[Route('/stagiaire/{idStagiaire}/addSession/{idSession}', name: 'add_stagiaire_session')]
+  public function addStagiaireSession(int $idSession, int $idStagiaire, SessionRepository $sessionRepository, StagiaireRepository $stagiaireRepository, EntityManagerInterface $entityManager, Request $request): Response
+  {
+    $session = $sessionRepository->find($idSession);
+    $stagiaire = $stagiaireRepository->find($idStagiaire);
+
+    $session->addStagiaire($stagiaire);
+    $entityManager->persist($session);
+    $entityManager->flush();
+
+    if ($request->attributes->get('_route') === 'add_session_stagiaire') {
+      return $this->redirectToRoute('show_session', ['id' => $idSession]);
+    } else {
+      return $this->redirectToRoute('show_stagiaire', ['id' => $idStagiaire]);
+    }
+
+
+  }
+
   #[Route('/session/{idSession}/removeStagiaire/{idStagiaire}', name: 'remove_session_stagiaire')]
   public function removeStagiaireSession(int $idSession, int $idStagiaire, SessionRepository $sessionRepository, StagiaireRepository $stagiaireRepository, EntityManagerInterface $entityManager): Response
   {
@@ -208,6 +218,4 @@ class SessionController extends AbstractController
 
     return $this->redirectToRoute('show_session', ['id' => $idSession]);
   }
-
-
 }

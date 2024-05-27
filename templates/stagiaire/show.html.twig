@@ -32,6 +32,10 @@
 <section id="stagiaire-sessions">
   <h3>Sessions enregistrées :</h3>
 
+  <button class="addButton">
+    <i class="fa-solid fa-circle-plus"></i> Ajouter une session
+  </button>
+
   {% if stagiaire.sessions is empty %}
 
   <p>Aucune session</p>
@@ -101,6 +105,21 @@
   </div>
   {{ form_end(formAddStagiaire) }}
 
+</dialog>
+
+<dialog id="sessionDialog" class="dialogAdd">
+
+  {% for session in autresSessions %}
+  <a href="{{path('add_stagiaire_session', {'idSession': session.id, 'idStagiaire': stagiaire.id})}}">
+    <p class="sessionForm">{{session.intitule}}</p>
+  </a>
+  {% endfor %}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+  </div>
 </dialog>
 
 {% endblock %}

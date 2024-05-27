@@ -32,11 +32,6 @@ class SessionType extends AbstractType
                 'class' => Formation::class,
                 'choice_label' => 'nom_formation',
             ])
-            ->add('stagiaires', EntityType::class, [
-                'class' => Stagiaire::class,
-                'choice_label' => 'nom',
-                'multiple' => true,
-            ])
         ;
     }
 
