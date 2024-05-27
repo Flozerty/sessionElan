@@ -16,11 +16,6 @@
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
   {% block stylesheets %}{% endblock %}
 
-  {% block javascripts %}
-  {% block importmap %}{{ importmap('app') }}
-  {% endblock %}
-
-  {% endblock %}
 </head>
 
 <body>
@@ -56,7 +51,7 @@
     <div id="connexion-status">
       {% if app.user %}
       {# on affiche que la partie avant le @ #}
-      <a id="userConnected" href="#">{{ app.user.email | split('@') [0] }}</a>
+      <a id="userConnected" href="{{path('app_profile')}}">{{ app.user.email | split('@') [0] }}</a>
       <a href="{{path('app_logout')}}">Se déconnecter</a>
       {% else %}
       <a href="{{path('app_login')}}">Se connecter</a>
@@ -89,13 +84,15 @@
     </div>
     {% endfor %}
     {% endfor %}
+    <p id="copy">&copy; 2024 Flozerty</p>
   </footer>
 
   <div id="bcgd-container"></div>
 
-  {% block javascriptsBottom %}{% endblock %}
+  {% block javascripts %}
   <script src="{{asset('js/modal.js')}}"></script>
   <script src="{{asset('js/menuBurger.js')}}"></script>
+  {% endblock %}
 </body>
 
 </html>
