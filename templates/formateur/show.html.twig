@@ -24,6 +24,10 @@
 <section id="formateur-sessions">
   <h3>Sessions encadrées :</h3>
 
+  <button class="addButton">
+    <i class="fa-solid fa-circle-plus"></i> Ajouter une session
+  </button>
+
   {% if formateur.sessions is empty %}
 
   <p>Aucune session</p>
@@ -31,7 +35,6 @@
   {% else %}
 
   <table>
-
     <thead>
       <tr>
         <th>Intitulé</th>
@@ -42,7 +45,6 @@
     </thead>
 
     <tbody>
-
       {% for session in formateur.sessions %}
 
       <tr>
@@ -65,7 +67,6 @@
       </tr>
 
       {% endfor %}
-
     </tbody>
   </table>
   {% endif %}
@@ -86,6 +87,24 @@
     <button type="submit">
       <i class="fa-solid fa-circle-check"></i>
     </button>
+  </div>
+  {{ form_end(formAddFormateur) }}
+
+</dialog>
+
+<dialog id="formateurDialog" class="dialogAdd">
+
+  {% for session in noFormateurSessions %}
+  <p>
+    {{session.intitule}}
+  </p>
+  {% endfor %}
+
+  <div class="modalNav">
+    <button type="button" class="cancel">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </button>
+
   </div>
   {{ form_end(formAddFormateur) }}
 

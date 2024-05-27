@@ -1,3 +1,13 @@
 #formateur-infos {
   align-self: baseline;
 }
+
+#formateur-sessions {
+  display: flex;
+  flex-direction: column;
+}
+
+.addButton {
+  align-self: center;
+  margin: 50px 0;
+}

@@ -52,7 +52,7 @@ class FormateurController extends AbstractController
 
   ///////////////////// Page de show formateur /////////////////////
   #[Route('/formateur/{id}', name: 'show_formateur')]
-  public function show(Formateur $formateur = null, Request $request, EntityManagerInterface $entityManager): Response
+  public function show(Formateur $formateur = null, SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
   {
     // redirection si url indique un id non existant
     if ($formateur) {
@@ -76,9 +76,12 @@ class FormateurController extends AbstractController
         return $this->redirectToRoute('show_formateur', ['id' => $formateur->getId()]);
       }
 
+      $noFormateurSessions = $sessionRepository->findBy(["formateur" => null], ["intitule" => "ASC"]);
+
       return $this->render('formateur/show.html.twig', [
         'formateur' => $formateur,
         'formAddFormateur' => $form,
+        'noFormateurSessions' => $noFormateurSessions,
       ]);
     } else {
       return $this->redirectToRoute('app_formateur');

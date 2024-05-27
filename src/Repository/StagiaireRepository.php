@@ -55,7 +55,8 @@ class StagiaireRepository extends ServiceEntityRepository
     $sub->select('se')
       ->from('App\Entity\Session', 'se')
       ->where($sub->expr()->notIn('se.id', $qb->getDQL()))
-      ->setParameter('id', $id);
+      ->setParameter('id', $id)
+      ->orderBy('se.intitule', 'ASC');
 
     $query = $sub->getQuery();
     return $query->getResult();

@@ -55,7 +55,8 @@ class SessionRepository extends ServiceEntityRepository
     $sub->select('mo')
       ->from('App\Entity\Module', 'mo')
       ->where($sub->expr()->notIn('mo.id', $qb->getDQL()))
-      ->setParameter('id', $id);
+      ->setParameter('id', $id)
+      ->orderBy('mo.nom_module', 'ASC');
 
     $query = $sub->getQuery();
     return $query->getResult();
@@ -83,7 +84,8 @@ class SessionRepository extends ServiceEntityRepository
     $sub->select('st')
       ->from('App\Entity\Stagiaire', 'st')
       ->where($sub->expr()->notIn('st.id', $qb->getDQL()))
-      ->setParameter('id', $id);
+      ->setParameter('id', $id)
+      ->orderBy('st.nom', 'ASC');
 
     $query = $sub->getQuery();
     return $query->getResult();
