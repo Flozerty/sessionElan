@@ -43,6 +43,7 @@
   margin-bottom: 10px;
   max-width: 50%;
   border-bottom: 1px dotted var(--darkbrown);
+  max-height: 500px;
 
   i {
     font-size: 1.2rem;
@@ -51,12 +52,14 @@
   th,
   td {
     padding: 10px 5px;
-    height: fit-content;
-    /*  */
     vertical-align: middle;
   }
 
+
   tbody {
+    overflow: hidden;
+    overflow-y: scroll;
+
     .delete {
       color: red;
     }
@@ -114,6 +117,7 @@
 #session-wrapper {
   display: flex;
   border: 1px solid var(--darkbrown);
+  align-items: flex-start
 }
 
 #session-modules {
