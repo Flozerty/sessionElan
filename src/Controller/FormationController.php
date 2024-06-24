@@ -119,6 +119,7 @@ class FormationController extends AbstractController
       }
 
       return $this->render('formation/show.html.twig', [
+        'activePage' => 'formations',
         'formation' => $formation,
         "sessionsNow" => $sessionsNow,
         "sessionsFuture" => $sessionsFuture,
@@ -147,5 +148,4 @@ class FormationController extends AbstractController
     }
     return $this->redirectToRoute('app_formation');
   }
-
 }

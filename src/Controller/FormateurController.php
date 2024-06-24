@@ -79,6 +79,7 @@ class FormateurController extends AbstractController
       $noFormateurSessions = $sessionRepository->findBy(["formateur" => null], ["intitule" => "ASC"]);
 
       return $this->render('formateur/show.html.twig', [
+        'activePage' => 'formateurs',
         'formateur' => $formateur,
         'formAddFormateur' => $form,
         'noFormateurSessions' => $noFormateurSessions,

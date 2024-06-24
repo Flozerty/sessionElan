@@ -76,6 +76,7 @@ class StagiaireController extends AbstractController
       $autresSessions = $stagiaireRepository->findNonSessions($stagiaire->getId());
 
       return $this->render('stagiaire/show.html.twig', [
+        'activePage' => "stagiaires",
         'stagiaire' => $stagiaire,
         'formAddStagiaire' => $form,
         'autresSessions' => $autresSessions,

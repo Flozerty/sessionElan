@@ -85,6 +85,7 @@ class SessionController extends AbstractController
     $autresStagiaires = $sessionRepository->findNonStagiaires($session->getId());
 
     return $this->render('session/show.html.twig', [
+      'activePage' => 'sessions',
       'session' => $session,
       'dureeTotale' => $dureeTotale,
       'autresModules' => $autresModules,
